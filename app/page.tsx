@@ -127,7 +127,7 @@ const extras: Extra[] = [
 
 // Escribe aquí el nuevo número de Mañana Rica cuando esté listo.
 // Debe incluir el código de país, sin espacios ni signos. Ejemplo: 521234567890.
-const whatsappNumber: string = "524431075027";
+const whatsappNumber: string = "523334583049";
 
 const money = (value: number) =>
   new Intl.NumberFormat("es-MX", {
