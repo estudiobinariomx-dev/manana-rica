@@ -1046,7 +1046,7 @@ export default function Home() {
           )}
         </div>
         <div className="mx-auto mt-10 flex max-w-[1440px] justify-between border-t border-white/10 pt-5 text-[11px] text-[#a88d82]">
-          <span>© 2026 Estudio Binario Mx</span>
+          <span>© 2026 <a href="https://estudiobinariomx.com/" target="_blank" rel="noopener noreferrer">Estudio Binario Mx</a></span>
           <span>Hechos con amor en Morelia Mich</span>
         </div>
       </footer>
