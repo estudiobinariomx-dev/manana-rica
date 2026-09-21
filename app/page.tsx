@@ -272,6 +272,7 @@ export default function Home() {
   const [confirmed, setConfirmed] = useState(false);
   const [revealedPackage, setRevealedPackage] = useState<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
   const [activeProcessStep, setActiveProcessStep] = useState(0);
 
   useEffect(() => {
@@ -313,6 +314,21 @@ export default function Home() {
     };
   }, []);
 
+  // Detecta cuando el footer está a la vista para ocultar el botón flotante
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry?.isIntersecting ?? false),
+      { threshold: 0.1 },
+    );
+
+    observer.observe(footer);
+
+    return () => observer.disconnect();
+  }, []);
+
   const extrasTotal = useMemo(
     () =>
       extras
@@ -347,12 +363,12 @@ export default function Home() {
 
   const formattedDate = date
     ? new Intl.DateTimeFormat("es-MX", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        timeZone: "UTC",
-      }).format(new Date(`${date}T00:00:00Z`))
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    }).format(new Date(`${date}T00:00:00Z`))
     : "Por definir";
 
   const whatsappMessage = [
@@ -397,13 +413,17 @@ export default function Home() {
 
   const whatsappInfoUrl = whatsappNumber
     ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        "Hola Mañana Rica, quiero información sobre sus desayunos sorpresa.",
-      )}`
+      "Hola Mañana Rica, quiero información sobre sus desayunos sorpresa.",
+    )}`
     : null;
 
   const whatsappOrderUrl = whatsappNumber
     ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`
     : null;
+
+  // El botón flotante solo se muestra después de bajar un poco,
+  // se oculta al llegar al footer y mientras el personalizador está abierto.
+  const showFloatingButton = isScrolled && !footerVisible && !drawerOpen;
 
   const openBuilder = (pkg: Package) => {
     setSelected(pkg);
@@ -425,10 +445,10 @@ export default function Home() {
 
       const extrasWithoutSameGroup = selectedExtra?.group
         ? current.filter((itemId) => {
-            const currentExtra = extras.find((extra) => extra.id === itemId);
+          const currentExtra = extras.find((extra) => extra.id === itemId);
 
-            return currentExtra?.group !== selectedExtra.group;
-          })
+          return currentExtra?.group !== selectedExtra.group;
+        })
         : current;
 
       return [...extrasWithoutSameGroup, id];
@@ -443,11 +463,10 @@ export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f8f2e9] text-[#321c19]">
       <header
-        className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-xl transition-all duration-500 ${
-          isScrolled
+        className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-xl transition-all duration-500 ${isScrolled
             ? "border-[#780d0b] bg-[#780d0b]/95 shadow-[0_8px_30px_rgba(70,10,10,0.18)]"
             : "border-[#6f0b0b]/10 bg-[#f8f2e9]/90"
-        }`}
+          }`}
       >
         <div className="mx-auto flex h-[78px] max-w-[1440px] items-center justify-between px-5 md:px-10">
           <a
@@ -463,17 +482,15 @@ export default function Home() {
 
             <div className="leading-none">
               <span
-                className={`block font-serif text-xl font-semibold tracking-tight transition-colors duration-500 ${
-                  isScrolled ? "text-white" : "text-[#780d0b]"
-                }`}
+                className={`block font-serif text-xl font-semibold tracking-tight transition-colors duration-500 ${isScrolled ? "text-white" : "text-[#780d0b]"
+                  }`}
               >
                 Mañana Rica
               </span>
 
               <span
-                className={`mt-1 block text-[9px] font-semibold uppercase tracking-[0.24em] transition-colors duration-500 ${
-                  isScrolled ? "text-[#f2c44c]" : "text-[#8f5f43]"
-                }`}
+                className={`mt-1 block text-[9px] font-semibold uppercase tracking-[0.24em] transition-colors duration-500 ${isScrolled ? "text-[#f2c44c]" : "text-[#8f5f43]"
+                  }`}
               >
                 Sorpresas que despiertan
               </span>
@@ -493,9 +510,8 @@ export default function Home() {
 
             <a
               href="#como-funciona"
-              className={`transition ${
-                isScrolled ? "hover:text-[#f2c44c]" : "hover:text-[#8a0f0d]"
-              }`}
+              className={`transition ${isScrolled ? "hover:text-[#f2c44c]" : "hover:text-[#8a0f0d]"
+                }`}
             >
               CÓMO FUNCIONA
             </a>
@@ -511,11 +527,10 @@ export default function Home() {
           <button
             type="button"
             onClick={() => openBuilder(selected)}
-            className={`group flex items-center gap-2 border px-4 py-2.5 text-sm font-semibold transition duration-300 ${
-              isScrolled
+            className={`group flex items-center gap-2 border px-4 py-2.5 text-sm font-semibold transition duration-300 ${isScrolled
                 ? "border-white text-white hover:bg-white hover:text-[#780d0b]"
                 : "border-[#780d0b] text-[#780d0b] hover:bg-[#780d0b] hover:text-white"
-            }`}
+              }`}
           >
             <BagIcon />
 
@@ -861,16 +876,14 @@ export default function Home() {
                     key={processStep.number}
                     type="button"
                     onClick={() => setActiveProcessStep(index)}
-                    className={`relative overflow-hidden border-b border-[#780d0b]/15 px-5 py-5 text-left transition duration-500 sm:border-b-0 sm:border-r sm:last:border-r-0 ${
-                      isActive
+                    className={`relative overflow-hidden border-b border-[#780d0b]/15 px-5 py-5 text-left transition duration-500 sm:border-b-0 sm:border-r sm:last:border-r-0 ${isActive
                         ? "bg-[#780d0b] text-white"
                         : "text-[#64100e] hover:bg-[#f3e4d3]"
-                    }`}
+                      }`}
                   >
                     <span
-                      className={`block text-[10px] font-bold uppercase tracking-[0.18em] ${
-                        isActive ? "text-[#f2c44c]" : "text-[#b25b2b]"
-                      }`}
+                      className={`block text-[10px] font-bold uppercase tracking-[0.18em] ${isActive ? "text-[#f2c44c]" : "text-[#b25b2b]"
+                        }`}
                     >
                       {processStep.number}
                     </span>
@@ -1015,9 +1028,9 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="bg-[#2f1714] px-5 py-12 text-[#f8f2e9] md:px-10">
-        <div className="mx-auto grid max-w-[1440px] gap-10 md:grid-cols-[1fr_auto_auto] md:items-end">
-          <div className="flex items-center gap-3">
+      <footer className="bg-[#2f1714] px-5 py-12 text-center text-[#f8f2e9] md:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-8">
+          <div className="flex flex-col items-center gap-3">
             <img
               src="/manana-rica-logo.png"
               alt=""
@@ -1030,39 +1043,47 @@ export default function Home() {
               </p>
             </div>
           </div>
+
           <div className="text-sm leading-7 text-[#d9bca9]">
             <p>Lunes a sábado · 8:00–18:00</p>
             <p>Pedidos con 24 h de anticipación</p>
           </div>
+
           {whatsappInfoUrl && (
-            <a
-              href={whatsappInfoUrl}
-              className="flex items-center gap-2 text-sm font-semibold text-[#f2c44c]"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href={whatsappInfoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold text-[#f2c44c]">
               Hablar por WhatsApp <ArrowIcon />
             </a>
           )}
         </div>
-        <div className="mx-auto mt-10 flex max-w-[1440px] justify-between border-t border-white/10 pt-5 text-[11px] text-[#a88d82]">
-          <span>© 2026 <a href="https://estudiobinariomx.com/" target="_blank" rel="noopener noreferrer">Estudio Binario Mx</a></span>
+
+        <div className="mx-auto mt-10 flex max-w-[1440px] flex-col items-center justify-center gap-2 border-t border-white/10 pt-5 text-center text-[11px] text-[#a88d82] md:flex-row md:gap-6">
+          <span>
+            © 2026{" "}
+            <a href="https://estudiobinariomx.com/" target="_blank" rel="noopener noreferrer">
+              Estudio Binario Mx
+            </a>
+          </span>
           <span>Hechos con amor en Morelia Mich</span>
         </div>
       </footer>
 
-      {!drawerOpen && whatsappInfoUrl && (
+      {whatsappInfoUrl && (
         <a
           href={whatsappInfoUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="Contactar a Mañana Rica por WhatsApp"
-          className="group fixed bottom-5 right-5 z-40 rounded-full bg-[#fffaf3] p-1.5 shadow-[0_12px_35px_rgba(74,31,20,0.28)] transition duration-300 hover:scale-110 md:bottom-8 md:right-8"
+          aria-hidden={!showFloatingButton}
+          tabIndex={showFloatingButton ? 0 : -1}
+          className={`group fixed bottom-4 right-4 z-40 rounded-full bg-[#fffaf3] p-1 shadow-[0_12px_35px_rgba(74,31,20,0.28)] transition duration-300 hover:scale-110 md:bottom-8 md:right-8 md:p-1.5 ${showFloatingButton
+              ? "translate-y-0 opacity-100"
+              : "pointer-events-none translate-y-4 opacity-0"
+            }`}
         >
           <img
             src="/manana-rica-logo.png"
             alt=""
-            className="manana-floating-logo h-16 w-16 object-contain md:h-20 md:w-20"
+            className="manana-floating-logo h-12 w-12 object-contain md:h-20 md:w-20"
           />
 
           <span className="pointer-events-none absolute right-full top-1/2 mr-3 hidden -translate-y-1/2 whitespace-nowrap bg-[#780d0b] px-4 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition group-hover:opacity-100 md:block">
@@ -1070,6 +1091,7 @@ export default function Home() {
           </span>
         </a>
       )}
+
       {drawerOpen && (
         <div
           className="fixed inset-0 z-50 flex justify-end bg-[#2b1410]/55 backdrop-blur-sm"
@@ -1197,20 +1219,18 @@ export default function Home() {
                           type="button"
                           onClick={() => setOccasion(item.name)}
                           aria-pressed={isSelected}
-                          className={`min-h-[76px] border px-3 py-3 text-left transition duration-300 ${
-                            isSelected
+                          className={`min-h-[76px] border px-3 py-3 text-left transition duration-300 ${isSelected
                               ? "border-[#780d0b] bg-[#780d0b] text-white shadow-md"
                               : "border-[#d8c7b7] bg-[#fffaf3] text-[#64100e] hover:-translate-y-0.5 hover:border-[#780d0b]/50"
-                          }`}
+                            }`}
                         >
                           <span className="block text-sm font-semibold leading-tight">
                             {item.name}
                           </span>
 
                           <span
-                            className={`mt-1 block text-[11px] leading-4 ${
-                              isSelected ? "text-white/75" : "text-[#8f6c60]"
-                            }`}
+                            className={`mt-1 block text-[11px] leading-4 ${isSelected ? "text-white/75" : "text-[#8f6c60]"
+                              }`}
                           >
                             {item.description}
                           </span>
