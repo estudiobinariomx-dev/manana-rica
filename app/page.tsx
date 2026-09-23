@@ -27,7 +27,7 @@ const packages: Package[] = [
     name: "Rayito de Sol",
     occasion: "Un lindo detalle",
     price: 289,
-    image: "/rayito-rico.png",
+    image: "/rayito_de_sol.png",
     description: "Pequeño en precio, grande en intención.",
     includes: [
       "🥪Sándwich de jamón y queso",
@@ -36,7 +36,7 @@ const packages: Package[] = [
       "🍓Fruta fresca de temporada",
       "🍊Jugo individual de naranja",
       "💌Tarjeta personalizada de ocasión",
-      "🎏Banderín basico personalizado",
+      "🎏Banderín basico",
       "🍴Cubiertos"
     ],
     badge: "Desde $289",
@@ -46,7 +46,7 @@ const packages: Package[] = [
     name: "Buenos dias",
     occasion: "El más completo",
     price: 349,
-    image: "/dia-bonito.png",
+    image: "/buenos_dias.png",
     description: "Todo lo necesario para empezar sonriendo.",
     includes: [
       "🥐Croissant de jamón y queso",
@@ -57,7 +57,7 @@ const packages: Package[] = [
       "🍊Jugo de naranja",
       "☕Café frio o Leche de sabor",
       "💌Tarjeta personalizada de ocasión",
-      "🎏Banderín basico personalizado",
+      "🎏Banderín basico",
       "🍴Cubiertos"
     ],
     badge: "Más elegido",
@@ -67,7 +67,7 @@ const packages: Package[] = [
     name: "Pense en ti",
     occasion: "Para celebrar",
     price: 419,
-    image: "/apapacho-mananero.png",
+    image: "/pense_en_ti.png",
     description: "Una sorpresa hecha especialmente para esa persona.",
     includes: [
       "🥐Croissant de jamón y queso",
@@ -79,7 +79,8 @@ const packages: Package[] = [
       "🍊Jugo de naranja grande",
       "☕Café frio o Leche de sabor",
       "💌Tarjeta personalizada de ocasión",
-      "🎏Banderín personalizado",
+      "📷Foto tipo polaroid",
+      "🎏Banderín basico",
       "🍴Cubiertos"
     ],
     badge: "Favorito",
@@ -89,7 +90,7 @@ const packages: Package[] = [
     name: "Apapacho",
     occasion: "La gran sorpresa",
     price: 519,
-    image: "/hero-porquesi.png",
+    image: "/apapacho.png",
     description: "Desayuno, pastel y recuerdos en una sola charola.",
     includes: [
       "🥐Croissant especial de pollo y queso",
@@ -101,8 +102,9 @@ const packages: Package[] = [
       "🍊Jugo de naranja grande",
       "🍫Muffin de chocolate o Mini pastel",
       "☕Café frio o Leche de sabor",
+      "📷3 Fotos tipo polaroid",
       "💌Tarjeta personalizada de ocasión",
-      "🎏Banderín con mensaje personalizado",
+      "🎏Banderín personalizado",
       "🍴Cubiertos"
     ],
     badge: "Especial",
