@@ -30,59 +30,80 @@ const packages: Package[] = [
     image: "/rayito-rico.png",
     description: "Pequeño en precio, grande en intención.",
     includes: [
-      "Sándwich de jamón y queso",
-      "2 mini waffles con miel",
-      "Fruta de temporada",
-      "Jugo individual",
-      "Tarjeta y banderín",
+      "🥪Sándwich de jamón y queso",
+      "🧇2 Mini Waffles",
+      "🍯Miel Mapple o Mermelada",
+      "🍓Fruta fresca de temporada",
+      "🍊Jugo individual de naranja",
+      "💌Tarjeta personalizada de ocasión",
+      "🎏Banderín basico personalizado",
+      "🍴Cubiertos"
     ],
     badge: "Desde $289",
   },
   {
     id: 2,
-    name: "Bonito Día",
+    name: "Buenos dias",
     occasion: "El más completo",
     price: 349,
     image: "/dia-bonito.png",
     description: "Todo lo necesario para empezar sonriendo.",
     includes: [
-      "Croissant de jamón y queso",
-      "2 mini waffles",
-      "Yogurt con granola y fruta",
-      "Jugo, leche o café frío",
-      "2 galletas, tarjeta y banderín",
+      "🥐Croissant de jamón y queso",
+      "🧇2 Mini Waffles",
+      "🍯Miel Mapple o Mermelada",
+      "🥣Yogurt con fruta y granola",
+      "🍪2 Galletas integrales",
+      "🍊Jugo de naranja",
+      "☕Café frio o Leche de sabor",
+      "💌Tarjeta personalizada de ocasión",
+      "🎏Banderín basico personalizado",
+      "🍴Cubiertos"
     ],
     badge: "Más elegido",
   },
   {
     id: 3,
-    name: "Te lo Mereces",
+    name: "Pense en ti",
     occasion: "Para celebrar",
     price: 419,
     image: "/apapacho-mananero.png",
     description: "Una sorpresa hecha especialmente para esa persona.",
     includes: [
-      "Croissant especial",
-      "3 mini waffles con fruta",
-      "Yogurt con granola",
-      "Jugo y bebida en vaso decorado",
-      "Fotografía, tarjeta y banderín",
+      "🥐Croissant de jamón y queso",
+      "🧇3 Mini Waffles",
+      "🍓Fruta para acompañar los waffles",
+      "🍯Miel Mapple o Mermelada",
+      "🥣Yogurt con fruta y granola",
+      "🍪3 Galletas integrales",
+      "🍊Jugo de naranja grande",
+      "☕Café frio o Leche de sabor",
+      "💌Tarjeta personalizada de ocasión",
+      "🎏Banderín personalizado",
+      "🍴Cubiertos"
     ],
     badge: "Favorito",
   },
   {
     id: 4,
-    name: "Solo Porque Sí",
+    name: "Apapacho",
     occasion: "La gran sorpresa",
     price: 519,
-    image: "/manana-inolvidable.png",
+    image: "/hero-porquesi.png",
     description: "Desayuno, pastel y recuerdos en una sola charola.",
     includes: [
-      "Croissant de jamón y queso",
-      "3 mini waffles con fruta",
-      "Yogurt, jugo y bebida fría",
-      "Mini pastel y 2 galletas",
-      "Fotografía, tarjeta y banderín grande",
+      "🥐Croissant especial de pollo y queso",
+      "🧇3 Mini Waffles",
+      "🍓Fruta para acompañar los waffles",
+      "🍯Miel Mapple o Mermelada",
+      "🥣Yogurt con fruta y granola",
+      "🍪3 Galletas integrales",
+      "🍊Jugo de naranja grande",
+      "🍫Muffin de chocolate o Mini pastel",
+      "☕Café frio o Leche de sabor",
+      "💌Tarjeta personalizada de ocasión",
+      "🎏Banderín con mensaje personalizado",
+      "🍴Cubiertos"
     ],
     badge: "Especial",
   },
@@ -189,7 +210,7 @@ const processSteps = [
   },
   {
     number: "02",
-    title: "Hazlo suyo",
+    title: "Personaliza tu desayuno",
     description:
       "Personaliza el mensaje, los sabores, las fotografías y todos los detalles especiales.",
   },
@@ -577,12 +598,12 @@ export default function Home() {
         <div className="relative min-h-[460px] lg:min-h-[660px]">
           <div className="absolute inset-0 overflow-hidden rounded-[48%_48%_8%_48%/38%_40%_8%_38%] bg-[#e4c6a1]">
             <img
-              src="/hero-breakfast.png"
-              alt="Desayuno sorpresa Mañana Rica con waffles, fruta y bebida fría"
-              className="h-full w-full object-cover"
+              src="/hero-porquesi.png"
+               alt="Desayuno sorpresa Mañana Rica"
+    className="hero-image-motion h-full w-full object-cover"
             />
           </div>
-          <div className="absolute -bottom-5 left-2 bg-[#fffaf3] p-4 shadow-[0_18px_50px_rgba(74,31,20,.15)] md:left-[-28px] md:p-5">
+          <div className="absolute -bottom-5 left-2 bg-[#fffaf3] p-4 shadow-[0_18px_50px_rgba(74,31,20,.15)] md:left-[-28px] md:p-5 hero-float">
             <p className="text-[10px] font-bold uppercase tracking-[0.19em] text-[#b25b2b]">
               Hecho esta mañana
             </p>
@@ -590,11 +611,12 @@ export default function Home() {
               fresco, bonito, para ti.
             </p>
           </div>
-          <div className="absolute right-4 top-8 grid h-24 w-24 rotate-6 place-items-center rounded-full bg-[#f2c44c] text-center text-[10px] font-bold uppercase leading-4 tracking-[0.13em] text-[#64100e] shadow-lg md:h-28 md:w-28">
+          <div className="absolute right-4 top-8 grid h-24 w-24 rotate-6 place-items-center rounded-full bg-[#f2c44c] text-center text-[10px] font-bold uppercase leading-4 tracking-[0.13em] text-[#64100e] shadow-lg md:h-28 md:w-28 hero-float">
+            
             <span>
-              Entrega
+              Ingredientes
               <br />
-              con amor
+              frescos y saludables.
               <br />♡
             </span>
           </div>
@@ -645,16 +667,14 @@ export default function Home() {
 
             return (
               <article key={pkg.id} className="product-card group">
-                <div className="relative aspect-[4/4.5] overflow-hidden bg-[#e7d7c4]">
+                <div className="relative h-[430px] overflow-hidden bg-[#e7d7c4]">
                   <img
                     src={pkg.image}
                     alt={`Paquete ${pkg.name}`}
                     className="
               h-full w-full object-cover
               transition duration-700
-              group-hover:scale-[1.06]
-            "
-                  />
+              group-hover:scale-[1.06]"/>
 
                   {pkg.badge && (
                     <span
@@ -671,62 +691,57 @@ export default function Home() {
 
                   {/* Contenido que aparece al pasar el cursor o tocar en celular */}
                   <div
-                    className={`
-              pointer-events-none absolute inset-0
-              flex flex-col justify-end
-              bg-[#64100e]/95 p-5 text-[#fff8ef]
-              opacity-0 translate-y-8
-              transition duration-500
+  className={`
+    pointer-events-none absolute inset-0
+    flex flex-col
+    bg-[#64100e]/95
+    p-5 text-[#fff8ef]
 
-              group-hover:pointer-events-auto
-              group-hover:translate-y-0
-              group-hover:opacity-100
+    opacity-0 translate-y-8
+    transition duration-500
 
-              group-focus-within:pointer-events-auto
-              group-focus-within:translate-y-0
-              group-focus-within:opacity-100
+    group-hover:pointer-events-auto
+    group-hover:translate-y-0
+    group-hover:opacity-100
 
-              ${revealed ? "pointer-events-auto translate-y-0 opacity-100" : ""}
-            `}
-                  >
-                    <p
-                      className="
-                text-[10px] font-bold uppercase
-                tracking-[0.19em] text-[#f2c44c]
-              "
-                    >
-                      Esto incluye
-                    </p>
+   ${revealed ? "pointer-events-auto translate-y-0 opacity-100 md:pointer-events-none md:translate-y-8 md:opacity-0" : ""}
+  `}
+>
+  <p className="text-[10px] font-bold uppercase tracking-[0.19em] text-[#f2c44c]">
+    Esto incluye
+  </p>
 
-                    <ul className="mt-4 space-y-2.5">
-                      {pkg.includes.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-2 text-xs leading-5"
-                        >
-                          <span className="mt-0.5 text-[#f2c44c]">
-                            <CheckIcon />
-                          </span>
+  <div className="package-scroll mt-3 min-h-0 flex-1 overflow-y-auto pr-2">
+    <ul className="space-y-2">
+      {pkg.includes.map((item) => (
+        <li
+          key={item}
+          className="flex items-start gap-2 text-xs leading-4"
+        >
+          <span className="mt-0.5 shrink-0 text-[#f2c44c]">
+            <CheckIcon />
+          </span>
 
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
 
-                    <button
-                      type="button"
-                      onClick={() => openBuilder(pkg)}
-                      className="
-                mt-5 flex w-full items-center justify-center gap-2
-                bg-[#f2c44c] px-4 py-3
-                text-xs font-bold text-[#64100e]
-                transition hover:bg-white
-              "
-                    >
-                      Personalizar paquete
-                      <ArrowIcon />
-                    </button>
-                  </div>
+  <button
+    type="button"
+    onClick={() => openBuilder(pkg)}
+    className="
+      mt-4 flex w-full shrink-0 items-center justify-center gap-2
+      bg-[#f2c44c] px-4 py-3
+      text-xs font-bold text-[#64100e]
+      transition hover:bg-white
+    "
+  >
+    Personalizar paquete
+    <ArrowIcon />
+  </button>
+</div>
                 </div>
 
                 <div className="border-x border-b border-[#780d0b]/15 p-5">
@@ -785,128 +800,253 @@ export default function Home() {
         </div>
       </section>
 
+<section className="bg-[#780d0b] px-5 py-16 text-[#fff8ef] md:px-10 md:py-20">
+  <div className="mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+
+    {/* FOTO */}
+    <div className="relative overflow-hidden rounded-t-[120px]">
+      <img
+        src="/frutaconyoguth.jpeg"
+        alt="Ingredientes frescos de Mañana Rica"
+        className="h-[420px] w-full object-cover md:h-[520px]"
+      />
+
+      <div className="absolute bottom-5 left-5 bg-[#f2c44c] px-5 py-3 text-sm font-bold text-[#64100e]">
+        Preparado con cuidado ♥
+      </div>
+    </div>
+
+    {/* CONTENIDO */}
+    <div>
+      <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#f2c44c]">
+        Nuestra forma de hacerlo
+      </p>
+
+      <h2 className="mt-5 font-serif text-[clamp(3rem,5vw,5.5rem)] leading-[0.9] tracking-[-0.04em]">
+        Lo que va dentro
+        <br />
+        <em className="font-normal text-[#f2c44c]">
+          también importa.
+        </em>
+      </h2>
+
+      <p className="mt-7 max-w-xl text-lg leading-8 text-[#fff8ef]/80">
+        No buscamos llenar nuestras cajas con mil cosas.
+        Preferimos cuidar lo que ponemos en ellas: ingredientes
+        seleccionados, preparación cuidada y alimentos que realmente
+        disfrutes.
+      </p>
+
+      {/* INGREDIENTES */}
+      <div className="mt-9 grid gap-4 sm:grid-cols-2">
+
+        <div className="border-t border-white/20 pt-4">
+          <span className="text-xl">🍓</span>
+          <h3 className="mt-2 font-serif text-xl">
+            Fruta fresca
+          </h3>
+          <p className="mt-1 text-sm text-white/65">
+            Lavada y desinfectada.
+          </p>
+        </div>
+
+        <div className="border-t border-white/20 pt-4">
+          <span className="text-xl">🥣</span>
+          <h3 className="mt-2 font-serif text-xl">
+            Yogurt griego
+          </h3>
+          <p className="mt-1 text-sm text-white/65">
+            Con fruta y granola.
+          </p>
+        </div>
+
+        <div className="border-t border-white/20 pt-4">
+          <span className="text-xl">🥪</span>
+          <h3 className="mt-2 font-serif text-xl">
+            Jamón de pavo
+          </h3>
+          <p className="mt-1 text-sm text-white/65">
+            En nuestros sándwiches y croissants.
+          </p>
+        </div>
+
+        <div className="border-t border-white/20 pt-4">
+          <span className="text-xl">🌾</span>
+          <h3 className="mt-2 font-serif text-xl">
+            Opciones integrales
+          </h3>
+          <p className="mt-1 text-sm text-white/65">
+            En productos seleccionados.
+          </p>
+        </div>
+
+      </div>
+
+      {/* FRASE FINAL */}
+      <div className="mt-10 border-l-2 border-[#f2c44c] pl-5">
+        <p className="font-serif text-2xl italic text-[#f2c44c]">
+          Bonito por fuera. Cuidado por dentro.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
       <section
-        id="como-funciona"
-        className="overflow-hidden bg-[#eadac7] px-5 py-24 md:px-10 md:py-32"
-      >
-        <div className="mx-auto grid max-w-[1440px] gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-          {/* Título de la sección */}
-          <div>
-            <p className="eyebrow">Así de sencillo</p>
+  id="como-funciona"
+  className="overflow-hidden bg-[#eadac7] px-5 py-16 md:px-10 md:py-20"
+>
+  <div className="mx-auto max-w-[1200px]">
 
-            <h2 className="mt-6 font-serif text-[clamp(4rem,6vw,7rem)] leading-[0.86] tracking-[-0.045em] text-[#64100e]">
-              De tu idea
-              <br />
-              <em className="font-normal text-[#d96a28]">a su puerta.</em>
-            </h2>
+    {/* Encabezado */}
+    <div className="mx-auto max-w-3xl text-center">
+      <p className="eyebrow">Así de sencillo</p>
 
-            <p className="mt-8 max-w-md text-base leading-7 text-[#785c53] md:text-lg">
-              Tú eliges cómo comienza la sorpresa. Nosotros hacemos que llegue
-              fresca, bonita y lista para emocionar.
-            </p>
-          </div>
+      <h2 className="mt-4 font-serif text-[clamp(2.8rem,5vw,5rem)] leading-[0.95] tracking-[-0.04em] text-[#64100e]">
+        De tu idea{" "}
+        <em className="font-normal text-[#d96a28]">
+          a su puerta.
+        </em>
+      </h2>
 
-          {/* Carrusel de pasos */}
-          <div className="border border-[#780d0b]/15 bg-[#f8f2e9] shadow-[0_24px_60px_rgba(75,30,20,0.08)]">
-            {/* Encabezado y flechas */}
-            <div className="flex items-center justify-between border-b border-[#780d0b]/15 px-6 py-5 md:px-10">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#b25b2b]">
-                Paso {currentProcessStep.number} de 03
-              </p>
+      <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-[#785c53] md:text-base">
+        Elige tu desayuno, personalízalo y agenda.
+        Nosotros hacemos el resto.
+      </p>
+    </div>
 
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={previousProcessStep}
-                  aria-label="Ver paso anterior"
-                  className="grid h-11 w-11 place-items-center rounded-full border border-[#780d0b]/20 text-xl text-[#780d0b] transition hover:border-[#780d0b] hover:bg-[#780d0b] hover:text-white"
-                >
-                  ←
-                </button>
+    {/* Pasos */}
+    <div className="relative mt-12">
 
-                <button
-                  type="button"
-                  onClick={nextProcessStep}
-                  aria-label="Ver siguiente paso"
-                  className="grid h-11 w-11 place-items-center rounded-full bg-[#780d0b] text-xl text-white transition hover:bg-[#d96a28]"
-                >
-                  →
-                </button>
-              </div>
-            </div>
+      {/* Línea que conecta los pasos - escritorio */}
+      <div className="absolute left-[16%] right-[16%] top-7 hidden h-px bg-[#780d0b]/20 md:block" />
 
-            {/* Contenido que cambia */}
-            <div
-              key={activeProcessStep}
-              className="process-step-animation min-h-[310px] px-6 py-10 md:min-h-[350px] md:px-10 md:py-14"
+      <div className="relative grid gap-4 md:grid-cols-3">
+        {processSteps.map((processStep, index) => {
+          const isActive = activeProcessStep === index;
+
+          return (
+            <button
+              key={processStep.number}
+              type="button"
+              onClick={() => setActiveProcessStep(index)}
+              className={`
+                group relative flex flex-col items-center
+                px-5 py-5 text-center
+                transition-all duration-500
+                ${
+                  isActive
+                    ? "md:-translate-y-1"
+                    : "hover:md:-translate-y-1"
+                }
+              `}
             >
-              <span className="font-serif text-7xl leading-none text-[#d96a28]/25 md:text-8xl">
-                {currentProcessStep.number}
+              {/* Número */}
+              <span
+                className={`
+                  relative z-10 grid h-14 w-14 place-items-center
+                  rounded-full border
+                  font-serif text-lg
+                  transition-all duration-500
+                  ${
+                    isActive
+                      ? "border-[#780d0b] bg-[#780d0b] text-[#f2c44c] shadow-[0_8px_25px_rgba(120,13,11,0.18)]"
+                      : "border-[#780d0b]/25 bg-[#eadac7] text-[#780d0b] group-hover:border-[#780d0b]"
+                  }
+                `}
+              >
+                {processStep.number}
               </span>
 
-              <h3 className="mt-4 font-serif text-4xl leading-none text-[#64100e] md:text-6xl">
-                {currentProcessStep.title}
+              {/* Nombre */}
+              <h3
+                className={`
+                  mt-5 font-serif text-2xl
+                  transition-colors duration-300
+                  ${
+                    isActive
+                      ? "text-[#780d0b]"
+                      : "text-[#64100e]"
+                  }
+                `}
+              >
+                {processStep.title}
               </h3>
 
-              <p className="mt-6 max-w-xl text-lg leading-8 text-[#785c53] md:text-xl md:leading-9">
-                {currentProcessStep.description}
+              {/* Descripción */}
+              <p className="mt-2 max-w-[280px] text-sm leading-6 text-[#785c53]">
+                {processStep.description}
               </p>
 
-              <button
-                type="button"
-                onClick={() =>
-                  document
-                    .getElementById("paquetes")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="mt-8 flex items-center gap-3 text-sm font-bold text-[#780d0b] transition hover:gap-5 hover:text-[#d96a28]"
-              >
-                Ver paquetes
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
+              {/* Indicador */}
+              <span
+                className={`
+                  mt-5 h-[3px] rounded-full
+                  transition-all duration-500
+                  ${
+                    isActive
+                      ? "w-16 bg-[#d96a28]"
+                      : "w-6 bg-[#780d0b]/15"
+                  }
+                `}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
 
-            {/* Botones de cada paso */}
-            <div className="grid border-t border-[#780d0b]/15 sm:grid-cols-3">
-              {processSteps.map((processStep, index) => {
-                const isActive = activeProcessStep === index;
+    {/* Mensaje del paso activo */}
+    <div
+      key={activeProcessStep}
+      className="
+        process-step-animation
+        mx-auto mt-7 max-w-2xl
+        border border-[#780d0b]/10
+        bg-[#f8f2e9]
+        px-6 py-5 text-center
+        shadow-[0_12px_35px_rgba(75,30,20,0.06)]
+        md:px-8
+      "
+    >
+      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d96a28]">
+        Paso {currentProcessStep.number}
+      </p>
 
-                return (
-                  <button
-                    key={processStep.number}
-                    type="button"
-                    onClick={() => setActiveProcessStep(index)}
-                    className={`relative overflow-hidden border-b border-[#780d0b]/15 px-5 py-5 text-left transition duration-500 sm:border-b-0 sm:border-r sm:last:border-r-0 ${isActive
-                        ? "bg-[#780d0b] text-white"
-                        : "text-[#64100e] hover:bg-[#f3e4d3]"
-                      }`}
-                  >
-                    <span
-                      className={`block text-[10px] font-bold uppercase tracking-[0.18em] ${isActive ? "text-[#f2c44c]" : "text-[#b25b2b]"
-                        }`}
-                    >
-                      {processStep.number}
-                    </span>
+      <p className="mt-2 font-serif text-xl text-[#64100e] md:text-2xl">
+        {currentProcessStep.title}
+      </p>
+    </div>
 
-                    <span className="mt-2 block font-serif text-2xl">
-                      {processStep.title}
-                    </span>
+    {/* CTA */}
+    <div className="mt-8 flex justify-center">
+      <button
+        type="button"
+        onClick={() =>
+          document
+            .getElementById("paquetes")
+            ?.scrollIntoView({ behavior: "smooth" })
+        }
+        className="
+          group flex items-center gap-3
+          bg-[#780d0b] px-6 py-3.5
+          text-sm font-bold text-white
+          transition duration-300
+          hover:bg-[#951a16]
+        "
+      >
+        Ver paquetes
+        <span
+          aria-hidden="true"
+          className="transition-transform duration-300 group-hover:translate-x-1"
+        >
+          →
+        </span>
+      </button>
+    </div>
 
-                    {isActive && (
-                      <span className="absolute inset-x-0 bottom-0 h-1 bg-white/20">
-                        <span
-                          key={`progress-${activeProcessStep}`}
-                          className="process-step-progress block h-full bg-[#f2c44c]"
-                        />
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+  </div>
+</section>
 
       <section className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
         <div className="grid overflow-hidden bg-[#64100e] text-[#fff8ef] lg:grid-cols-[1.1fr_.9fr]">

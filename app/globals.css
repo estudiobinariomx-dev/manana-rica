@@ -114,3 +114,87 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     animation: none;
   }
 }
+
+.package-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 196, 76, 0.45) transparent;
+}
+
+.package-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.package-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.package-scroll::-webkit-scrollbar-thumb {
+  background: rgba(242, 196, 76, 0.45);
+  border-radius: 999px;
+}
+
+/* Movimiento muy suave de la fotografía principal */
+@keyframes heroImageMotion {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.035);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hero-image-motion {
+  animation: heroImageMotion 12s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+/* Círculo amarillo */
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.hero-float {
+  animation: heroFloat 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+/* Sello Mañana Rica */
+@keyframes heroFloatSlow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-7px) rotate(2deg);
+  }
+}
+
+.hero-float-slow {
+  animation: heroFloatSlow 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .hero-image-motion,
+  .hero-float,
+  .hero-float-slow {
+    animation: none;
+  }
+}
