@@ -275,6 +275,57 @@ const orderRules = [
   },
 ] as const;
 
+const occasions = [
+  {
+    name: "Cumpleaños",
+    phrase: "Haz que su día comience todavía más especial.",
+    image: "/ocasion-cumpleanos.png",
+    accent: "#d96a28",
+  },
+  {
+    name: "Amor y aniversario",
+    phrase: "Detalles para decir todo eso que a veces no cabe en palabras.",
+    image: "/ocasion-amor.png",
+    accent: "#a92c35",
+  },
+  {
+    name: "Día de las Madres",
+    phrase: "Una mañana bonita para quien siempre está para ti.",
+    image: "/ocasion-mama.png",
+    accent: "#c75d7a",
+  },
+  {
+    name: "Día del Padre",
+    phrase: "Una forma diferente de decir: gracias, papá.",
+    image: "/ocasion-papa.png",
+    accent: "#395875",
+  },
+  {
+    name: "Día del Maestro",
+    phrase: "Un detalle para agradecer a quien deja huella.",
+    image: "/ocasion-maestro.png",
+    accent: "#8b5d42",
+  },
+  {
+    name: "Día del Estudiante",
+    phrase: "Para celebrar su esfuerzo, sus sueños y todo lo que viene.",
+    image: "/ocasion-estudiante.png",
+    accent: "#ca7848",
+  },
+  {
+    name: "Día de Enfermería",
+    phrase: "Un pequeño gracias para quienes cuidan de los demás.",
+    image: "/ocasion-enfermeria.png",
+    accent: "#5386a6",
+  },
+  {
+    name: "Día del Arquitecto",
+    phrase: "Para quienes convierten ideas en espacios e historias.",
+    image: "/ocasion-arquitecto.png",
+    accent: "#79a8c2",
+  },
+];
+
 export default function Home() {
   const [selected, setSelected] = useState<Package>(packages[0]!);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -282,6 +333,7 @@ export default function Home() {
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
   const [deliveryZone, setDeliveryZone] = useState("");
   const [occasion, setOccasion] = useState("Cumpleaños");
+  const [selectedTheme, setSelectedTheme] = useState("");
   const [recipient, setRecipient] = useState("");
   const [sender, setSender] = useState("");
   const [phone, setPhone] = useState("");
@@ -399,10 +451,11 @@ export default function Home() {
     "",
     "Hola, quiero solicitar un desayuno sorpresa.",
     "",
-    "*DETALLES DEL DESAYUNO*",
-    `*Paquete:* ${selected.name}`,
-    `*Ocasión:* ${occasion}`,
-    "",
+   "*DETALLES DEL DESAYUNO*",
+  `*Paquete:* ${selected.name}`,
+  `*Ocasión:* ${occasion}`,
+  `*Temática:* ${selectedTheme || "Sin temática especial"}`,
+  "",
     "*EXTRAS*",
     selectedExtrasForWhatsApp || "- Sin extras",
     "",
@@ -457,6 +510,11 @@ export default function Home() {
     setConfirmed(false);
     setDrawerOpen(true);
   };
+
+const openBuilderWithoutTheme = (pkg: Package) => {
+  setSelectedTheme("");
+  openBuilder(pkg);
+};
 
   const toggleExtra = (id: string) => {
     const selectedExtra = extras.find((extra) => extra.id === id);
@@ -530,6 +588,16 @@ export default function Home() {
             >
               PAQUETES
             </a>
+            <a
+  href="#ocasiones"
+  className={`transition ${
+    isScrolled
+      ? "hover:text-[#f2c44c]"
+      : "hover:text-[#8a0f0d]"
+  }`}
+>
+  OCASIONES
+</a>
 
             <a
               href="#como-funciona"
@@ -746,10 +814,10 @@ export default function Home() {
   <button
     type="button"
     onClick={(event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      openBuilder(pkg);
-    }}
+  event.preventDefault();
+  event.stopPropagation();
+  openBuilderWithoutTheme(pkg);
+}}
     className="
       relative z-30
       mt-4 flex w-full shrink-0
@@ -821,6 +889,202 @@ export default function Home() {
           })}
         </div>
       </section>
+
+
+<section
+  id="ocasiones"
+  className="overflow-hidden bg-[#fffaf3] py-20 md:py-28"
+>
+  {/* ENCABEZADO */}
+  <div className="mx-auto max-w-[1440px] px-5 md:px-10">
+    <div className="grid gap-6 md:grid-cols-[1fr_.7fr] md:items-end">
+      <div>
+        <p className="eyebrow">
+          Hecho para ese momento
+        </p>
+
+        <h2 className="mt-4 max-w-3xl font-serif text-[clamp(3rem,5vw,5.5rem)] leading-[0.9] tracking-[-0.045em] text-[#64100e]">
+          Una sorpresa para
+          <br />
+          <em className="font-normal text-[#d96a28]">
+            cada ocasión.
+          </em>
+        </h2>
+      </div>
+
+      <p className="max-w-md text-sm leading-7 text-[#785c53] md:text-base">
+        Cumpleaños, aniversarios, logros o simplemente porque sí.
+        Personalizamos los pequeños detalles para que cada sorpresa
+        tenga su propia historia.
+      </p>
+    </div>
+  </div>
+
+  {/* CARRUSEL ANIMADO */}
+  <div className="occasion-slider mt-12">
+    <div className="occasion-track">
+      {[...occasions, ...occasions].map((theme, index) => (
+        <article
+          key={`${theme.name}-${index}`}
+          className="occasion-card group"
+          style={
+            {
+              "--occasion-accent": theme.accent,
+            } as React.CSSProperties
+          }
+        >
+          {/* IMAGEN */}
+          <div className="relative h-[390px] overflow-hidden md:h-[440px]">
+            <img
+              src={theme.image}
+              alt={`Desayuno sorpresa para ${theme.name}`}
+              className="
+                h-full w-full object-cover
+                transition duration-700
+                group-hover:scale-[1.07]
+              "
+            />
+
+            {/* Overlay */}
+            <div
+              className="
+                absolute inset-0
+                bg-gradient-to-t
+                from-[#321c19]/75
+                via-transparent
+                to-transparent
+                transition duration-500
+                group-hover:from-[#321c19]/90
+              "
+            />
+
+            {/* Número */}
+            <span
+              className="
+                absolute right-5 top-5
+                grid h-10 w-10 place-items-center
+                rounded-full
+                bg-[#fffaf3]/90
+                text-[10px] font-bold
+                text-[#780d0b]
+                backdrop-blur
+              "
+            >
+              {String((index % occasions.length) + 1).padStart(2, "0")}
+            </span>
+
+            {/* TEXTO SOBRE IMAGEN */}
+            <div
+              className="
+                absolute bottom-0 left-0 right-0
+                translate-y-2 p-6 text-white
+                transition duration-500
+                group-hover:translate-y-0
+              "
+            >
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f2c44c]">
+                Mañana Rica
+              </p>
+
+              <h3 className="mt-2 font-serif text-3xl leading-none">
+                {theme.name}
+              </h3>
+
+              <p
+                className="
+                  mt-3 max-h-0 overflow-hidden
+                  text-sm leading-5 text-white/80
+                  opacity-0
+                  transition-all duration-500
+                  group-hover:max-h-20
+                  group-hover:opacity-100
+                "
+              >
+                {theme.phrase}
+              </p>
+            </div>
+          </div>
+
+          {/* PARTE INFERIOR */}
+<button
+  type="button"
+  onClick={() => {
+    setSelectedTheme(theme.name);
+    openBuilder(packages[2]!);
+  }}
+  className="
+    flex w-full items-center justify-between
+    border border-t-0 border-[#780d0b]/10
+    bg-[#fffaf3]
+    px-5 py-4
+    text-left
+    text-[#64100e]
+    transition duration-500
+    group-hover:bg-[var(--occasion-accent)]
+    group-hover:text-white
+  "
+>
+  <span className="text-xs font-bold uppercase tracking-[0.13em]">
+    Personalizar paquete
+  </span>
+
+  <span className="text-xl transition duration-500 group-hover:translate-x-1">
+    →
+  </span>
+</button>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  {/* CTA FINAL */}
+  <div className="mx-auto mt-12 max-w-[1440px] px-5 md:px-10">
+    <div
+      className="
+        flex flex-col items-start justify-between gap-6
+        border-t border-[#780d0b]/15 pt-8
+        md:flex-row md:items-center
+      "
+    >
+      <div>
+        <p className="font-serif text-2xl text-[#64100e]">
+          ¿No encuentras tu ocasión?
+        </p>
+
+        <p className="mt-1 text-sm text-[#785c53]">
+          Cuéntanos tu idea y hacemos la sorpresa más tuya.
+        </p>
+      </div>
+
+      <button
+  type="button"
+ onClick={() => {
+  setSelectedTheme("");
+  openBuilder(selected);
+}}
+  className="
+    flex w-full items-center justify-between
+    border border-t-0 border-[#780d0b]/10
+    bg-[#fffaf3]
+    px-5 py-4
+    text-left
+    text-[#64100e]
+    transition duration-500
+    group-hover:bg-[var(--occasion-accent)]
+    group-hover:text-white
+  "
+>
+  <span className="text-xs font-bold uppercase tracking-[0.13em]">
+    Personalizar paquete
+  </span>
+
+  <span className="text-xl transition duration-500 group-hover:translate-x-1">
+    →
+  </span>
+</button>
+    </div>
+  </div>
+</section>
 
 <section className="bg-[#780d0b] px-5 py-16 text-[#fff8ef] md:px-10 md:py-20">
   <div className="mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
@@ -1304,6 +1568,21 @@ export default function Home() {
                 <div>
                   <p className="step-label">Paso 1 · Personaliza</p>
                   <h3 className="step-title">Hazlo muy de esa persona.</h3>
+                  {selectedTheme && (
+  <div className="mt-5 flex items-center justify-between border border-[#780d0b]/15 bg-[#f8eee1] px-4 py-3">
+    <div>
+      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#b25b2b]">
+        Temática seleccionada
+      </p>
+
+      <p className="mt-1 font-serif text-xl text-[#64100e]">
+        {selectedTheme}
+      </p>
+    </div>
+
+    <span className="text-2xl">♥</span>
+  </div>
+)}
                   <div className="mt-7 grid gap-3 sm:grid-cols-2">
                     {extras.map((extra) => {
                       const active = selectedExtras.includes(extra.id);

@@ -198,3 +198,95 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     animation: none;
   }
 }
+
+/* ========================================
+   CARRUSEL DE OCASIONES - MAÑANA RICA
+======================================== */
+
+.occasion-slider {
+  width: 100%;
+  overflow: hidden;
+}
+
+.occasion-track {
+  display: flex;
+  width: max-content;
+  gap: 20px;
+  padding-inline: 20px;
+  animation: occasion-scroll 42s linear infinite;
+}
+
+.occasion-slider:hover .occasion-track {
+  animation-play-state: paused;
+}
+
+.occasion-card {
+  width: 310px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.occasion-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 50px rgba(78, 28, 20, 0.14);
+}
+
+@keyframes occasion-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 10px));
+  }
+}
+
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+  .occasion-slider {
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+  }
+
+  .occasion-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .occasion-track {
+    animation: none;
+    padding-inline: 20px;
+  }
+
+  .occasion-card {
+    width: 82vw;
+    max-width: 330px;
+    scroll-snap-align: center;
+  }
+
+  /* En celular mostramos la descripción siempre */
+  .occasion-card p {
+    max-height: 80px;
+  }
+}
+
+
+/* ACCESIBILIDAD:
+   desactiva movimiento si el usuario lo solicita */
+
+@media (prefers-reduced-motion: reduce) {
+  .occasion-track {
+    animation: none;
+  }
+
+  .occasion-card,
+  .occasion-card img {
+    transition: none;
+  }
+}
