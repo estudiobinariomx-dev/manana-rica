@@ -692,21 +692,34 @@ export default function Home() {
                   )}
 
                   {/* Contenido que aparece al pasar el cursor o tocar en celular */}
-                  <div
+{/* Contenido del paquete */}
+<div
   className={`
-    pointer-events-none absolute inset-0
+    absolute inset-0 z-20
     flex flex-col
     bg-[#64100e]/95
     p-5 text-[#fff8ef]
-
-    opacity-0 translate-y-8
     transition duration-500
 
-    group-hover:pointer-events-auto
-    group-hover:translate-y-0
-    group-hover:opacity-100
+    md:pointer-events-none
+    md:translate-y-8
+    md:opacity-0
+    md:group-hover:pointer-events-auto
+    md:group-hover:translate-y-0
+    md:group-hover:opacity-100
 
-   ${revealed ? "pointer-events-auto translate-y-0 opacity-100 md:pointer-events-none md:translate-y-8 md:opacity-0" : ""}
+    ${
+      revealed
+        ? "pointer-events-auto translate-y-0 opacity-100"
+        : "pointer-events-none translate-y-8 opacity-0"
+    }
+
+    md:[&]:pointer-events-none
+    md:[&]:translate-y-8
+    md:[&]:opacity-0
+    md:group-hover:[&]:pointer-events-auto
+    md:group-hover:[&]:translate-y-0
+    md:group-hover:[&]:opacity-100
   `}
 >
   <p className="text-[10px] font-bold uppercase tracking-[0.19em] text-[#f2c44c]">
@@ -732,9 +745,16 @@ export default function Home() {
 
   <button
     type="button"
-    onClick={() => openBuilder(pkg)}
+    onClick={(event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openBuilder(pkg);
+    }}
     className="
-      mt-4 flex w-full shrink-0 items-center justify-center gap-2
+      relative z-30
+      mt-4 flex w-full shrink-0
+      touch-manipulation
+      items-center justify-center gap-2
       bg-[#f2c44c] px-4 py-3
       text-xs font-bold text-[#64100e]
       transition hover:bg-white
@@ -1068,7 +1088,7 @@ export default function Home() {
           </div>
           <div className="relative min-h-80">
             <img
-              src="/dia-bonito-personalizado.png"
+              src="/rayito_de_sol.png"
               alt="Paquete Día Bonito personalizado con fotografías"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
