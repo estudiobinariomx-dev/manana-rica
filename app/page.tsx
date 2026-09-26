@@ -26,7 +26,7 @@ const packages: Package[] = [
     id: 1,
     name: "Rayito de Sol",
     occasion: "Un lindo detalle",
-    price: 289,
+    price: 359,
     image: "/rayito_de_sol.png",
     description: "Pequeño en precio, grande en intención.",
     includes: [
@@ -39,13 +39,13 @@ const packages: Package[] = [
       "🎏Banderín basico",
       "🍴Cubiertos"
     ],
-    badge: "Desde $289",
+    badge: "Desde $359",
   },
   {
     id: 2,
     name: "Buenos dias",
     occasion: "El más completo",
-    price: 349,
+    price: 379,
     image: "/buenos_dias.png",
     description: "Todo lo necesario para empezar sonriendo.",
     includes: [
@@ -66,7 +66,7 @@ const packages: Package[] = [
     id: 3,
     name: "Pense en ti",
     occasion: "Para celebrar",
-    price: 419,
+    price: 459,
     image: "/pense_en_ti.png",
     description: "Una sorpresa hecha especialmente para esa persona.",
     includes: [
@@ -89,7 +89,7 @@ const packages: Package[] = [
     id: 4,
     name: "Apapacho",
     occasion: "La gran sorpresa",
-    price: 519,
+    price: 559,
     image: "/apapacho.png",
     description: "Desayuno, pastel y recuerdos en una sola charola.",
     includes: [
