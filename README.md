@@ -76,11 +76,20 @@ La paleta principal aparece en las clases de Tailwind dentro de
 
 ## Cambiar imágenes
 
-Coloca las nuevas imágenes dentro de `public/` y actualiza su ruta en el arreglo
-`packages`. Por ejemplo:
+Las fotos de la página viven en `public/img/` en formato WebP, en dos tamaños
+(480 px para celular y 900 px para pantallas grandes). No subas PNG pesados
+directo a `public/`: primero optimízalos con el script:
+
+```bash
+node scripts/optimizar-imagenes.mjs ~/Descargas/mi-nuevo-paquete.png
+```
+
+Eso crea `public/img/mi-nuevo-paquete-480.webp` y `public/img/mi-nuevo-paquete-900.webp`.
+En el arreglo `packages` (o `occasionThemes`) usa siempre la de 900; el `srcSet`
+se arma solo con `srcSetFor()`:
 
 ```ts
-image: "/mi-nuevo-paquete.png"
+image: "/img/mi-nuevo-paquete-900.webp"
 ```
 
 ## Datos que debes reemplazar

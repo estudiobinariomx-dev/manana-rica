@@ -27,7 +27,7 @@ const packages: Package[] = [
     name: "Rayito de Sol",
     occasion: "Un lindo detalle",
     price: 359,
-    image: "/rayito_de_sol.png",
+    image: "/img/rayito_de_sol-900.webp",
     description: "Pequeño en precio, grande en intención.",
     includes: [
       "🥪Sándwich de jamón y queso",
@@ -46,7 +46,7 @@ const packages: Package[] = [
     name: "Buenos dias",
     occasion: "El más completo",
     price: 379,
-    image: "/buenos_dias.png",
+    image: "/img/buenos_dias-900.webp",
     description: "Todo lo necesario para empezar sonriendo.",
     includes: [
       "🥐Croissant de jamón y queso",
@@ -67,7 +67,7 @@ const packages: Package[] = [
     name: "Pense en ti",
     occasion: "Para celebrar",
     price: 459,
-    image: "/pense_en_ti.png",
+    image: "/img/pense_en_ti-900.webp",
     description: "Una sorpresa hecha especialmente para esa persona.",
     includes: [
       "🥐Croissant de jamón y queso",
@@ -90,7 +90,7 @@ const packages: Package[] = [
     name: "Apapacho",
     occasion: "La gran sorpresa",
     price: 559,
-    image: "/apapacho.png",
+    image: "/img/apapacho-900.webp",
     description: "Desayuno, pastel y recuerdos en una sola charola.",
     includes: [
       "🥐Croissant especial de pollo y queso",
@@ -151,6 +151,11 @@ const extras: Extra[] = [
 // Escribe aquí el nuevo número de Mañana Rica cuando esté listo.
 // Debe incluir el código de país, sin espacios ni signos. Ejemplo: 521234567890.
 const whatsappNumber: string = "523334583049";
+
+// Imágenes optimizadas en /public/img: cada una existe en 480 px y 900 px.
+// Recibe la ruta de la versión grande (-900.webp) y arma el srcSet.
+const srcSetFor = (src: string) =>
+  `${src.replace("-900.webp", "-480.webp")} 480w, ${src} 900w`;
 
 const money = (value: number) =>
   new Intl.NumberFormat("es-MX", {
@@ -279,49 +284,49 @@ const occasions = [
   {
     name: "Cumpleaños",
     phrase: "Haz que su día comience todavía más especial.",
-    image: "/ocasion-cumpleanos.png",
+    image: "/img/ocasion-cumpleanos-900.webp",
     accent: "#d96a28",
   },
   {
     name: "Amor y aniversario",
     phrase: "Detalles para decir todo eso que a veces no cabe en palabras.",
-    image: "/ocasion-amor.png",
+    image: "/img/ocasion-amor-900.webp",
     accent: "#a92c35",
   },
   {
     name: "Día de las Madres",
     phrase: "Una mañana bonita para quien siempre está para ti.",
-    image: "/ocasion-mama.png",
+    image: "/img/ocasion-mama-900.webp",
     accent: "#c75d7a",
   },
   {
     name: "Día del Padre",
     phrase: "Una forma diferente de decir: gracias, papá.",
-    image: "/ocasion-papa.png",
+    image: "/img/ocasion-papa-900.webp",
     accent: "#395875",
   },
   {
     name: "Día del Maestro",
     phrase: "Un detalle para agradecer a quien deja huella.",
-    image: "/ocasion-maestro.png",
+    image: "/img/ocasion-maestro-900.webp",
     accent: "#8b5d42",
   },
   {
     name: "Día del Estudiante",
     phrase: "Para celebrar su esfuerzo, sus sueños y todo lo que viene.",
-    image: "/ocasion-estudiante.png",
+    image: "/img/ocasion-estudiante-900.webp",
     accent: "#ca7848",
   },
   {
     name: "Día de Enfermería",
     phrase: "Un pequeño gracias para quienes cuidan de los demás.",
-    image: "/ocasion-enfermeria.png",
+    image: "/img/ocasion-enfermeria-900.webp",
     accent: "#5386a6",
   },
   {
     name: "Día del Arquitecto",
     phrase: "Para quienes convierten ideas en espacios e historias.",
-    image: "/ocasion-arquitecto.png",
+    image: "/img/ocasion-arquitecto-900.webp",
     accent: "#79a8c2",
   },
 ];
@@ -451,11 +456,11 @@ export default function Home() {
     "",
     "Hola, quiero solicitar un desayuno sorpresa.",
     "",
-   "*DETALLES DEL DESAYUNO*",
-  `*Paquete:* ${selected.name}`,
-  `*Ocasión:* ${occasion}`,
-  `*Temática:* ${selectedTheme || "Sin temática especial"}`,
-  "",
+    "*DETALLES DEL DESAYUNO*",
+    `*Paquete:* ${selected.name}`,
+    `*Ocasión:* ${occasion}`,
+    `*Temática:* ${selectedTheme || "Sin temática especial"}`,
+    "",
     "*EXTRAS*",
     selectedExtrasForWhatsApp || "- Sin extras",
     "",
@@ -511,10 +516,10 @@ export default function Home() {
     setDrawerOpen(true);
   };
 
-const openBuilderWithoutTheme = (pkg: Package) => {
-  setSelectedTheme("");
-  openBuilder(pkg);
-};
+  const openBuilderWithoutTheme = (pkg: Package) => {
+    setSelectedTheme("");
+    openBuilder(pkg);
+  };
 
   const toggleExtra = (id: string) => {
     const selectedExtra = extras.find((extra) => extra.id === id);
@@ -545,8 +550,8 @@ const openBuilderWithoutTheme = (pkg: Package) => {
     <main className="min-h-screen overflow-hidden bg-[#f8f2e9] text-[#321c19]">
       <header
         className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-xl transition-all duration-500 ${isScrolled
-            ? "border-[#780d0b] bg-[#780d0b]/95 shadow-[0_8px_30px_rgba(70,10,10,0.18)]"
-            : "border-[#6f0b0b]/10 bg-[#f8f2e9]/90"
+          ? "border-[#780d0b] bg-[#780d0b]/95 shadow-[0_8px_30px_rgba(70,10,10,0.18)]"
+          : "border-[#6f0b0b]/10 bg-[#f8f2e9]/90"
           }`}
       >
         <div className="mx-auto flex h-[78px] max-w-[1440px] items-center justify-between px-5 md:px-10">
@@ -556,7 +561,10 @@ const openBuilderWithoutTheme = (pkg: Package) => {
             aria-label="Mañana Rica, inicio"
           >
             <img
-              src="/manana-rica-logo.png"
+              src="/img/logo-160.webp"
+              width={160}
+              height={160}
+              decoding="async"
               alt="Mañana Rica"
               className="h-14 w-14 object-contain"
             />
@@ -589,15 +597,14 @@ const openBuilderWithoutTheme = (pkg: Package) => {
               PAQUETES
             </a>
             <a
-  href="#ocasiones"
-  className={`transition ${
-    isScrolled
-      ? "hover:text-[#f2c44c]"
-      : "hover:text-[#8a0f0d]"
-  }`}
->
-  OCASIONES
-</a>
+              href="#ocasiones"
+              className={`transition ${isScrolled
+                  ? "hover:text-[#f2c44c]"
+                  : "hover:text-[#8a0f0d]"
+                }`}
+            >
+              OCASIONES
+            </a>
 
             <a
               href="#como-funciona"
@@ -619,8 +626,8 @@ const openBuilderWithoutTheme = (pkg: Package) => {
             type="button"
             onClick={() => openBuilder(selected)}
             className={`group flex items-center gap-2 border px-4 py-2.5 text-sm font-semibold transition duration-300 ${isScrolled
-                ? "border-white text-white hover:bg-white hover:text-[#780d0b]"
-                : "border-[#780d0b] text-[#780d0b] hover:bg-[#780d0b] hover:text-white"
+              ? "border-white text-white hover:bg-white hover:text-[#780d0b]"
+              : "border-[#780d0b] text-[#780d0b] hover:bg-[#780d0b] hover:text-white"
               }`}
           >
             <BagIcon />
@@ -668,9 +675,15 @@ const openBuilderWithoutTheme = (pkg: Package) => {
         <div className="relative min-h-[460px] lg:min-h-[660px]">
           <div className="absolute inset-0 overflow-hidden rounded-[48%_48%_8%_48%/38%_40%_8%_38%] bg-[#e4c6a1]">
             <img
-              src="/hero-porquesi.png"
-               alt="Desayuno sorpresa Mañana Rica"
-    className="hero-image-motion h-full w-full object-cover"
+              src="/img/hero-porquesi-1086.webp"
+              srcSet="/img/hero-porquesi-600.webp 600w, /img/hero-porquesi-1086.webp 1086w"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              width={1086}
+              height={1448}
+              fetchPriority="high"
+              decoding="async"
+              alt="Desayuno sorpresa Mañana Rica"
+              className="hero-image-motion h-full w-full object-cover"
             />
           </div>
           <div className="absolute -bottom-5 left-2 bg-[#fffaf3] p-4 shadow-[0_18px_50px_rgba(74,31,20,.15)] md:left-[-28px] md:p-5 hero-float">
@@ -682,7 +695,7 @@ const openBuilderWithoutTheme = (pkg: Package) => {
             </p>
           </div>
           <div className="absolute right-4 top-8 grid h-24 w-24 rotate-6 place-items-center rounded-full bg-[#f2c44c] text-center text-[10px] font-bold uppercase leading-4 tracking-[0.13em] text-[#64100e] shadow-lg md:h-28 md:w-28 hero-float">
-            
+
             <span>
               Ingredientes
               <br />
@@ -740,6 +753,12 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                 <div className="relative h-[430px] overflow-hidden bg-[#e7d7c4]">
                   <img
                     src={pkg.image}
+                    srcSet={srcSetFor(pkg.image)}
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    width={900}
+                    height={900}
+                    loading="lazy"
+                    decoding="async"
                     alt={`Paquete ${pkg.name}`}
                     className="
               h-full w-full object-cover
@@ -760,9 +779,9 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                   )}
 
                   {/* Contenido que aparece al pasar el cursor o tocar en celular */}
-{/* Contenido del paquete */}
-<div
-  className={`
+                  {/* Contenido del paquete */}
+                  <div
+                    className={`
     absolute inset-0 z-20
     flex flex-col
     bg-[#64100e]/95
@@ -776,11 +795,10 @@ const openBuilderWithoutTheme = (pkg: Package) => {
     md:group-hover:translate-y-0
     md:group-hover:opacity-100
 
-    ${
-      revealed
-        ? "pointer-events-auto translate-y-0 opacity-100"
-        : "pointer-events-none translate-y-8 opacity-0"
-    }
+    ${revealed
+                        ? "pointer-events-auto translate-y-0 opacity-100"
+                        : "pointer-events-none translate-y-8 opacity-0"
+                      }
 
     md:[&]:pointer-events-none
     md:[&]:translate-y-8
@@ -789,36 +807,36 @@ const openBuilderWithoutTheme = (pkg: Package) => {
     md:group-hover:[&]:translate-y-0
     md:group-hover:[&]:opacity-100
   `}
->
-  <p className="text-[10px] font-bold uppercase tracking-[0.19em] text-[#f2c44c]">
-    Esto incluye
-  </p>
+                  >
+                    <p className="text-[10px] font-bold uppercase tracking-[0.19em] text-[#f2c44c]">
+                      Esto incluye
+                    </p>
 
-  <div className="package-scroll mt-3 min-h-0 flex-1 overflow-y-auto pr-2">
-    <ul className="space-y-2">
-      {pkg.includes.map((item) => (
-        <li
-          key={item}
-          className="flex items-start gap-2 text-xs leading-4"
-        >
-          <span className="mt-0.5 shrink-0 text-[#f2c44c]">
-            <CheckIcon />
-          </span>
+                    <div className="package-scroll mt-3 min-h-0 flex-1 overflow-y-auto pr-2">
+                      <ul className="space-y-2">
+                        {pkg.includes.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2 text-xs leading-4"
+                          >
+                            <span className="mt-0.5 shrink-0 text-[#f2c44c]">
+                              <CheckIcon />
+                            </span>
 
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-  <button
-    type="button"
-    onClick={(event) => {
-  event.preventDefault();
-  event.stopPropagation();
-  openBuilderWithoutTheme(pkg);
-}}
-    className="
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        openBuilderWithoutTheme(pkg);
+                      }}
+                      className="
       relative z-30
       mt-4 flex w-full shrink-0
       touch-manipulation
@@ -827,11 +845,11 @@ const openBuilderWithoutTheme = (pkg: Package) => {
       text-xs font-bold text-[#64100e]
       transition hover:bg-white
     "
-  >
-    Personalizar paquete
-    <ArrowIcon />
-  </button>
-</div>
+                    >
+                      Personalizar paquete
+                      <ArrowIcon />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="border-x border-b border-[#780d0b]/15 p-5">
@@ -891,63 +909,69 @@ const openBuilderWithoutTheme = (pkg: Package) => {
       </section>
 
 
-<section
-  id="ocasiones"
-  className="overflow-hidden bg-[#fffaf3] py-20 md:py-28"
->
-  {/* ENCABEZADO */}
-  <div className="mx-auto max-w-[1440px] px-5 md:px-10">
-    <div className="grid gap-6 md:grid-cols-[1fr_.7fr] md:items-end">
-      <div>
-        <p className="eyebrow">
-          Hecho para ese momento
-        </p>
+      <section
+        id="ocasiones"
+        className="overflow-hidden bg-[#fffaf3] py-20 md:py-28"
+      >
+        {/* ENCABEZADO */}
+        <div className="mx-auto max-w-[1440px] px-5 md:px-10">
+          <div className="grid gap-6 md:grid-cols-[1fr_.7fr] md:items-end">
+            <div>
+              <p className="eyebrow">
+                Hecho para ese momento
+              </p>
 
-        <h2 className="mt-4 max-w-3xl font-serif text-[clamp(3rem,5vw,5.5rem)] leading-[0.9] tracking-[-0.045em] text-[#64100e]">
-          Una sorpresa para
-          <br />
-          <em className="font-normal text-[#d96a28]">
-            cada ocasión.
-          </em>
-        </h2>
-      </div>
+              <h2 className="mt-4 max-w-3xl font-serif text-[clamp(3rem,5vw,5.5rem)] leading-[0.9] tracking-[-0.045em] text-[#64100e]">
+                Una sorpresa para
+                <br />
+                <em className="font-normal text-[#d96a28]">
+                  cada ocasión.
+                </em>
+              </h2>
+            </div>
 
-      <p className="max-w-md text-sm leading-7 text-[#785c53] md:text-base">
-        Cumpleaños, aniversarios, logros o simplemente porque sí.
-        Personalizamos los pequeños detalles para que cada sorpresa
-        tenga su propia historia.
-      </p>
-    </div>
-  </div>
+            <p className="max-w-md text-sm leading-7 text-[#785c53] md:text-base">
+              Cumpleaños, aniversarios, logros o simplemente porque sí.
+              Personalizamos los pequeños detalles para que cada sorpresa
+              tenga su propia historia.
+            </p>
+          </div>
+        </div>
 
-  {/* CARRUSEL ANIMADO */}
-  <div className="occasion-slider mt-12">
-    <div className="occasion-track">
-      {[...occasions, ...occasions].map((theme, index) => (
-        <article
-          key={`${theme.name}-${index}`}
-          className="occasion-card group"
-          style={
-            {
-              "--occasion-accent": theme.accent,
-            } as React.CSSProperties
-          }
-        >
-          {/* IMAGEN */}
-          <div className="relative h-[390px] overflow-hidden md:h-[440px]">
-            <img
-              src={theme.image}
-              alt={`Desayuno sorpresa para ${theme.name}`}
-              className="
+        {/* CARRUSEL ANIMADO */}
+        <div className="occasion-slider mt-12">
+          <div className="occasion-track">
+            {[...occasions, ...occasions].map((theme, index) => (
+              <article
+                key={`${theme.name}-${index}`}
+                className="occasion-card group"
+                style={
+                  {
+                    "--occasion-accent": theme.accent,
+                  } as React.CSSProperties
+                }
+              >
+                {/* IMAGEN */}
+                <div className="relative h-[390px] overflow-hidden md:h-[440px]">
+                  <img
+                    src={theme.image}
+                    srcSet={srcSetFor(theme.image)}
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    width={900}
+                    height={1200}
+                    loading="lazy"
+                    decoding="async"
+                    alt={`Desayuno sorpresa para ${theme.name}`}
+                    className="
                 h-full w-full object-cover
                 transition duration-700
                 group-hover:scale-[1.07]
               "
-            />
+                  />
 
-            {/* Overlay */}
-            <div
-              className="
+                  {/* Overlay */}
+                  <div
+                    className="
                 absolute inset-0
                 bg-gradient-to-t
                 from-[#321c19]/75
@@ -956,11 +980,11 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                 transition duration-500
                 group-hover:from-[#321c19]/90
               "
-            />
+                  />
 
-            {/* Número */}
-            <span
-              className="
+                  {/* Número */}
+                  <span
+                    className="
                 absolute right-5 top-5
                 grid h-10 w-10 place-items-center
                 rounded-full
@@ -969,29 +993,29 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                 text-[#780d0b]
                 backdrop-blur
               "
-            >
-              {String((index % occasions.length) + 1).padStart(2, "0")}
-            </span>
+                  >
+                    {String((index % occasions.length) + 1).padStart(2, "0")}
+                  </span>
 
-            {/* TEXTO SOBRE IMAGEN */}
-            <div
-              className="
+                  {/* TEXTO SOBRE IMAGEN */}
+                  <div
+                    className="
                 absolute bottom-0 left-0 right-0
                 translate-y-2 p-6 text-white
                 transition duration-500
                 group-hover:translate-y-0
               "
-            >
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f2c44c]">
-                Mañana Rica
-              </p>
+                  >
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f2c44c]">
+                      Mañana Rica
+                    </p>
 
-              <h3 className="mt-2 font-serif text-3xl leading-none">
-                {theme.name}
-              </h3>
+                    <h3 className="mt-2 font-serif text-3xl leading-none">
+                      {theme.name}
+                    </h3>
 
-              <p
-                className="
+                    <p
+                      className="
                   mt-3 max-h-0 overflow-hidden
                   text-sm leading-5 text-white/80
                   opacity-0
@@ -999,20 +1023,20 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                   group-hover:max-h-20
                   group-hover:opacity-100
                 "
-              >
-                {theme.phrase}
-              </p>
-            </div>
-          </div>
+                    >
+                      {theme.phrase}
+                    </p>
+                  </div>
+                </div>
 
-          {/* PARTE INFERIOR */}
-<button
-  type="button"
-  onClick={() => {
-    setSelectedTheme(theme.name);
-    openBuilder(packages[2]!);
-  }}
-  className="
+                {/* PARTE INFERIOR */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedTheme(theme.name);
+                    openBuilder(packages[2]!);
+                  }}
+                  className="
     flex w-full items-center justify-between
     border border-t-0 border-[#780d0b]/10
     bg-[#fffaf3]
@@ -1023,46 +1047,46 @@ const openBuilderWithoutTheme = (pkg: Package) => {
     group-hover:bg-[var(--occasion-accent)]
     group-hover:text-white
   "
->
-  <span className="text-xs font-bold uppercase tracking-[0.13em]">
-    Personalizar paquete
-  </span>
+                >
+                  <span className="text-xs font-bold uppercase tracking-[0.13em]">
+                    Personalizar paquete
+                  </span>
 
-  <span className="text-xl transition duration-500 group-hover:translate-x-1">
-    →
-  </span>
-</button>
-        </article>
-      ))}
-    </div>
-  </div>
+                  <span className="text-xl transition duration-500 group-hover:translate-x-1">
+                    →
+                  </span>
+                </button>
+              </article>
+            ))}
+          </div>
+        </div>
 
-  {/* CTA FINAL */}
-  <div className="mx-auto mt-12 max-w-[1440px] px-5 md:px-10">
-    <div
-      className="
+        {/* CTA FINAL */}
+        <div className="mx-auto mt-12 max-w-[1440px] px-5 md:px-10">
+          <div
+            className="
         flex flex-col items-start justify-between gap-6
         border-t border-[#780d0b]/15 pt-8
         md:flex-row md:items-center
       "
-    >
-      <div>
-        <p className="font-serif text-2xl text-[#64100e]">
-          ¿No encuentras tu ocasión?
-        </p>
+          >
+            <div>
+              <p className="font-serif text-2xl text-[#64100e]">
+                ¿No encuentras tu ocasión?
+              </p>
 
-        <p className="mt-1 text-sm text-[#785c53]">
-          Cuéntanos tu idea y hacemos la sorpresa más tuya.
-        </p>
-      </div>
+              <p className="mt-1 text-sm text-[#785c53]">
+                Cuéntanos tu idea y hacemos la sorpresa más tuya.
+              </p>
+            </div>
 
-      <button
-  type="button"
- onClick={() => {
-  setSelectedTheme("");
-  openBuilder(selected);
-}}
-  className="
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedTheme("");
+                openBuilder(selected);
+              }}
+              className="
     flex w-full items-center justify-between
     border border-t-0 border-[#780d0b]/10
     bg-[#fffaf3]
@@ -1073,219 +1097,221 @@ const openBuilderWithoutTheme = (pkg: Package) => {
     group-hover:bg-[var(--occasion-accent)]
     group-hover:text-white
   "
->
-  <span className="text-xs font-bold uppercase tracking-[0.13em]">
-    Personalizar paquete
-  </span>
+            >
+              <span className="text-xs font-bold uppercase tracking-[0.13em]">
+                Personalizar paquete
+              </span>
 
-  <span className="text-xl transition duration-500 group-hover:translate-x-1">
-    →
-  </span>
-</button>
-    </div>
-  </div>
-</section>
-
-<section className="bg-[#780d0b] px-5 py-16 text-[#fff8ef] md:px-10 md:py-20">
-  <div className="mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
-
-    {/* FOTO */}
-    <div className="relative overflow-hidden rounded-t-[120px]">
-      <img
-        src="/frutaconyoguth.jpeg"
-        alt="Ingredientes frescos de Mañana Rica"
-        className="h-[420px] w-full object-cover md:h-[520px]"
-      />
-
-      <div className="absolute bottom-5 left-5 bg-[#f2c44c] px-5 py-3 text-sm font-bold text-[#64100e]">
-        Preparado con cuidado ♥
-      </div>
-    </div>
-
-    {/* CONTENIDO */}
-    <div>
-      <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#f2c44c]">
-        Nuestra forma de hacerlo
-      </p>
-
-      <h2 className="mt-5 font-serif text-[clamp(3rem,5vw,5.5rem)] leading-[0.9] tracking-[-0.04em]">
-        Lo que va dentro
-        <br />
-        <em className="font-normal text-[#f2c44c]">
-          también importa.
-        </em>
-      </h2>
-
-      <p className="mt-7 max-w-xl text-lg leading-8 text-[#fff8ef]/80">
-        No buscamos llenar nuestras cajas con mil cosas.
-        Preferimos cuidar lo que ponemos en ellas: ingredientes
-        seleccionados, preparación cuidada y alimentos que realmente
-        disfrutes.
-      </p>
-
-      {/* INGREDIENTES */}
-      <div className="mt-9 grid gap-4 sm:grid-cols-2">
-
-        <div className="border-t border-white/20 pt-4">
-          <span className="text-xl">🍓</span>
-          <h3 className="mt-2 font-serif text-xl">
-            Fruta fresca
-          </h3>
-          <p className="mt-1 text-sm text-white/65">
-            Lavada y desinfectada.
-          </p>
+              <span className="text-xl transition duration-500 group-hover:translate-x-1">
+                →
+              </span>
+            </button>
+          </div>
         </div>
+      </section>
 
-        <div className="border-t border-white/20 pt-4">
-          <span className="text-xl">🥣</span>
-          <h3 className="mt-2 font-serif text-xl">
-            Yogurt griego
-          </h3>
-          <p className="mt-1 text-sm text-white/65">
-            Con fruta y granola.
-          </p>
+      <section className="bg-[#780d0b] px-5 py-16 text-[#fff8ef] md:px-10 md:py-20">
+        <div className="mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+
+          {/* FOTO */}
+          <div className="relative overflow-hidden rounded-t-[120px]">
+            <img
+              src="/img/frutaconyoguth-960.webp"
+              srcSet="/img/frutaconyoguth-480.webp 480w, /img/frutaconyoguth-960.webp 960w"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              width={960}
+              height={1280}
+              loading="lazy"
+              decoding="async"
+              alt="Ingredientes frescos de Mañana Rica"
+              className="h-[420px] w-full object-cover md:h-[520px]"
+            />
+
+            <div className="absolute bottom-5 left-5 bg-[#f2c44c] px-5 py-3 text-sm font-bold text-[#64100e]">
+              Preparado con cuidado ♥
+            </div>
+          </div>
+
+          {/* CONTENIDO */}
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#f2c44c]">
+              Nuestra forma de hacerlo
+            </p>
+
+            <h2 className="mt-5 font-serif text-[clamp(3rem,5vw,5.5rem)] leading-[0.9] tracking-[-0.04em]">
+              Lo que va dentro
+              <br />
+              <em className="font-normal text-[#f2c44c]">
+                también importa.
+              </em>
+            </h2>
+
+            <p className="mt-7 max-w-xl text-lg leading-8 text-[#fff8ef]/80">
+              No buscamos llenar nuestras cajas con mil cosas.
+              Preferimos cuidar lo que ponemos en ellas: ingredientes
+              seleccionados, preparación cuidada y alimentos que realmente
+              disfrutes.
+            </p>
+
+            {/* INGREDIENTES */}
+            <div className="mt-9 grid gap-4 sm:grid-cols-2">
+
+              <div className="border-t border-white/20 pt-4">
+                <span className="text-xl">🍓</span>
+                <h3 className="mt-2 font-serif text-xl">
+                  Fruta fresca
+                </h3>
+                <p className="mt-1 text-sm text-white/65">
+                  Lavada y desinfectada.
+                </p>
+              </div>
+
+              <div className="border-t border-white/20 pt-4">
+                <span className="text-xl">🥣</span>
+                <h3 className="mt-2 font-serif text-xl">
+                  Yogurt griego
+                </h3>
+                <p className="mt-1 text-sm text-white/65">
+                  Con fruta y granola.
+                </p>
+              </div>
+
+              <div className="border-t border-white/20 pt-4">
+                <span className="text-xl">🥪</span>
+                <h3 className="mt-2 font-serif text-xl">
+                  Jamón de pavo
+                </h3>
+                <p className="mt-1 text-sm text-white/65">
+                  En nuestros sándwiches y croissants.
+                </p>
+              </div>
+
+              <div className="border-t border-white/20 pt-4">
+                <span className="text-xl">🌾</span>
+                <h3 className="mt-2 font-serif text-xl">
+                  Opciones integrales
+                </h3>
+                <p className="mt-1 text-sm text-white/65">
+                  En productos seleccionados.
+                </p>
+              </div>
+
+            </div>
+
+            {/* FRASE FINAL */}
+            <div className="mt-10 border-l-2 border-[#f2c44c] pl-5">
+              <p className="font-serif text-2xl italic text-[#f2c44c]">
+                Bonito por fuera. Cuidado por dentro.
+              </p>
+            </div>
+
+          </div>
         </div>
-
-        <div className="border-t border-white/20 pt-4">
-          <span className="text-xl">🥪</span>
-          <h3 className="mt-2 font-serif text-xl">
-            Jamón de pavo
-          </h3>
-          <p className="mt-1 text-sm text-white/65">
-            En nuestros sándwiches y croissants.
-          </p>
-        </div>
-
-        <div className="border-t border-white/20 pt-4">
-          <span className="text-xl">🌾</span>
-          <h3 className="mt-2 font-serif text-xl">
-            Opciones integrales
-          </h3>
-          <p className="mt-1 text-sm text-white/65">
-            En productos seleccionados.
-          </p>
-        </div>
-
-      </div>
-
-      {/* FRASE FINAL */}
-      <div className="mt-10 border-l-2 border-[#f2c44c] pl-5">
-        <p className="font-serif text-2xl italic text-[#f2c44c]">
-          Bonito por fuera. Cuidado por dentro.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
+      </section>
       <section
-  id="como-funciona"
-  className="overflow-hidden bg-[#eadac7] px-5 py-16 md:px-10 md:py-20"
->
-  <div className="mx-auto max-w-[1200px]">
+        id="como-funciona"
+        className="overflow-hidden bg-[#eadac7] px-5 py-16 md:px-10 md:py-20"
+      >
+        <div className="mx-auto max-w-[1200px]">
 
-    {/* Encabezado */}
-    <div className="mx-auto max-w-3xl text-center">
-      <p className="eyebrow">Así de sencillo</p>
+          {/* Encabezado */}
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="eyebrow">Así de sencillo</p>
 
-      <h2 className="mt-4 font-serif text-[clamp(2.8rem,5vw,5rem)] leading-[0.95] tracking-[-0.04em] text-[#64100e]">
-        De tu idea{" "}
-        <em className="font-normal text-[#d96a28]">
-          a su puerta.
-        </em>
-      </h2>
+            <h2 className="mt-4 font-serif text-[clamp(2.8rem,5vw,5rem)] leading-[0.95] tracking-[-0.04em] text-[#64100e]">
+              De tu idea{" "}
+              <em className="font-normal text-[#d96a28]">
+                a su puerta.
+              </em>
+            </h2>
 
-      <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-[#785c53] md:text-base">
-        Elige tu desayuno, personalízalo y agenda.
-        Nosotros hacemos el resto.
-      </p>
-    </div>
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-[#785c53] md:text-base">
+              Elige tu desayuno, personalízalo y agenda.
+              Nosotros hacemos el resto.
+            </p>
+          </div>
 
-    {/* Pasos */}
-    <div className="relative mt-12">
+          {/* Pasos */}
+          <div className="relative mt-12">
 
-      {/* Línea que conecta los pasos - escritorio */}
-      <div className="absolute left-[16%] right-[16%] top-7 hidden h-px bg-[#780d0b]/20 md:block" />
+            {/* Línea que conecta los pasos - escritorio */}
+            <div className="absolute left-[16%] right-[16%] top-7 hidden h-px bg-[#780d0b]/20 md:block" />
 
-      <div className="relative grid gap-4 md:grid-cols-3">
-        {processSteps.map((processStep, index) => {
-          const isActive = activeProcessStep === index;
+            <div className="relative grid gap-4 md:grid-cols-3">
+              {processSteps.map((processStep, index) => {
+                const isActive = activeProcessStep === index;
 
-          return (
-            <button
-              key={processStep.number}
-              type="button"
-              onClick={() => setActiveProcessStep(index)}
-              className={`
+                return (
+                  <button
+                    key={processStep.number}
+                    type="button"
+                    onClick={() => setActiveProcessStep(index)}
+                    className={`
                 group relative flex flex-col items-center
                 px-5 py-5 text-center
                 transition-all duration-500
-                ${
-                  isActive
-                    ? "md:-translate-y-1"
-                    : "hover:md:-translate-y-1"
-                }
+                ${isActive
+                        ? "md:-translate-y-1"
+                        : "hover:md:-translate-y-1"
+                      }
               `}
-            >
-              {/* Número */}
-              <span
-                className={`
+                  >
+                    {/* Número */}
+                    <span
+                      className={`
                   relative z-10 grid h-14 w-14 place-items-center
                   rounded-full border
                   font-serif text-lg
                   transition-all duration-500
-                  ${
-                    isActive
-                      ? "border-[#780d0b] bg-[#780d0b] text-[#f2c44c] shadow-[0_8px_25px_rgba(120,13,11,0.18)]"
-                      : "border-[#780d0b]/25 bg-[#eadac7] text-[#780d0b] group-hover:border-[#780d0b]"
-                  }
+                  ${isActive
+                          ? "border-[#780d0b] bg-[#780d0b] text-[#f2c44c] shadow-[0_8px_25px_rgba(120,13,11,0.18)]"
+                          : "border-[#780d0b]/25 bg-[#eadac7] text-[#780d0b] group-hover:border-[#780d0b]"
+                        }
                 `}
-              >
-                {processStep.number}
-              </span>
+                    >
+                      {processStep.number}
+                    </span>
 
-              {/* Nombre */}
-              <h3
-                className={`
+                    {/* Nombre */}
+                    <h3
+                      className={`
                   mt-5 font-serif text-2xl
                   transition-colors duration-300
-                  ${
-                    isActive
-                      ? "text-[#780d0b]"
-                      : "text-[#64100e]"
-                  }
+                  ${isActive
+                          ? "text-[#780d0b]"
+                          : "text-[#64100e]"
+                        }
                 `}
-              >
-                {processStep.title}
-              </h3>
+                    >
+                      {processStep.title}
+                    </h3>
 
-              {/* Descripción */}
-              <p className="mt-2 max-w-[280px] text-sm leading-6 text-[#785c53]">
-                {processStep.description}
-              </p>
+                    {/* Descripción */}
+                    <p className="mt-2 max-w-[280px] text-sm leading-6 text-[#785c53]">
+                      {processStep.description}
+                    </p>
 
-              {/* Indicador */}
-              <span
-                className={`
+                    {/* Indicador */}
+                    <span
+                      className={`
                   mt-5 h-[3px] rounded-full
                   transition-all duration-500
-                  ${
-                    isActive
-                      ? "w-16 bg-[#d96a28]"
-                      : "w-6 bg-[#780d0b]/15"
-                  }
+                  ${isActive
+                          ? "w-16 bg-[#d96a28]"
+                          : "w-6 bg-[#780d0b]/15"
+                        }
                 `}
-              />
-            </button>
-          );
-        })}
-      </div>
-    </div>
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-    {/* Mensaje del paso activo */}
-    <div
-      key={activeProcessStep}
-      className="
+          {/* Mensaje del paso activo */}
+          <div
+            key={activeProcessStep}
+            className="
         process-step-animation
         mx-auto mt-7 max-w-2xl
         border border-[#780d0b]/10
@@ -1294,45 +1320,45 @@ const openBuilderWithoutTheme = (pkg: Package) => {
         shadow-[0_12px_35px_rgba(75,30,20,0.06)]
         md:px-8
       "
-    >
-      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d96a28]">
-        Paso {currentProcessStep.number}
-      </p>
+          >
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d96a28]">
+              Paso {currentProcessStep.number}
+            </p>
 
-      <p className="mt-2 font-serif text-xl text-[#64100e] md:text-2xl">
-        {currentProcessStep.title}
-      </p>
-    </div>
+            <p className="mt-2 font-serif text-xl text-[#64100e] md:text-2xl">
+              {currentProcessStep.title}
+            </p>
+          </div>
 
-    {/* CTA */}
-    <div className="mt-8 flex justify-center">
-      <button
-        type="button"
-        onClick={() =>
-          document
-            .getElementById("paquetes")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="
+          {/* CTA */}
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() =>
+                document
+                  .getElementById("paquetes")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="
           group flex items-center gap-3
           bg-[#780d0b] px-6 py-3.5
           text-sm font-bold text-white
           transition duration-300
           hover:bg-[#951a16]
         "
-      >
-        Ver paquetes
-        <span
-          aria-hidden="true"
-          className="transition-transform duration-300 group-hover:translate-x-1"
-        >
-          →
-        </span>
-      </button>
-    </div>
+            >
+              Ver paquetes
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </button>
+          </div>
 
-  </div>
-</section>
+        </div>
+      </section>
 
       <section className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
         <div className="grid overflow-hidden bg-[#64100e] text-[#fff8ef] lg:grid-cols-[1.1fr_.9fr]">
@@ -1352,7 +1378,13 @@ const openBuilderWithoutTheme = (pkg: Package) => {
           </div>
           <div className="relative min-h-80">
             <img
-              src="/rayito_de_sol.png"
+              src="/img/rayito_de_sol-900.webp"
+              srcSet={srcSetFor("/img/rayito_de_sol-900.webp")}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              width={900}
+              height={900}
+              loading="lazy"
+              decoding="async"
               alt="Paquete Día Bonito personalizado con fotografías"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
@@ -1458,7 +1490,11 @@ const openBuilderWithoutTheme = (pkg: Package) => {
         <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-8">
           <div className="flex flex-col items-center gap-3">
             <img
-              src="/manana-rica-logo.png"
+              src="/img/logo-160.webp"
+              width={160}
+              height={160}
+              decoding="async"
+              loading="lazy"
               alt=""
               className="h-14 w-14 object-contain"
             />
@@ -1502,12 +1538,16 @@ const openBuilderWithoutTheme = (pkg: Package) => {
           aria-hidden={!showFloatingButton}
           tabIndex={showFloatingButton ? 0 : -1}
           className={`group fixed bottom-4 right-4 z-40 rounded-full bg-[#fffaf3] p-1 shadow-[0_12px_35px_rgba(74,31,20,0.28)] transition duration-300 hover:scale-110 md:bottom-8 md:right-8 md:p-1.5 ${showFloatingButton
-              ? "translate-y-0 opacity-100"
-              : "pointer-events-none translate-y-4 opacity-0"
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-4 opacity-0"
             }`}
         >
           <img
-            src="/manana-rica-logo.png"
+            src="/img/logo-160.webp"
+            width={160}
+            height={160}
+            decoding="async"
+            loading="lazy"
             alt=""
             className="manana-floating-logo h-12 w-12 object-contain md:h-20 md:w-20"
           />
@@ -1569,20 +1609,20 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                   <p className="step-label">Paso 1 · Personaliza</p>
                   <h3 className="step-title">Hazlo muy de esa persona.</h3>
                   {selectedTheme && (
-  <div className="mt-5 flex items-center justify-between border border-[#780d0b]/15 bg-[#f8eee1] px-4 py-3">
-    <div>
-      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#b25b2b]">
-        Temática seleccionada
-      </p>
+                    <div className="mt-5 flex items-center justify-between border border-[#780d0b]/15 bg-[#f8eee1] px-4 py-3">
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#b25b2b]">
+                          Temática seleccionada
+                        </p>
 
-      <p className="mt-1 font-serif text-xl text-[#64100e]">
-        {selectedTheme}
-      </p>
-    </div>
+                        <p className="mt-1 font-serif text-xl text-[#64100e]">
+                          {selectedTheme}
+                        </p>
+                      </div>
 
-    <span className="text-2xl">♥</span>
-  </div>
-)}
+                      <span className="text-2xl">♥</span>
+                    </div>
+                  )}
                   <div className="mt-7 grid gap-3 sm:grid-cols-2">
                     {extras.map((extra) => {
                       const active = selectedExtras.includes(extra.id);
@@ -1661,8 +1701,8 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                           onClick={() => setOccasion(item.name)}
                           aria-pressed={isSelected}
                           className={`min-h-[76px] border px-3 py-3 text-left transition duration-300 ${isSelected
-                              ? "border-[#780d0b] bg-[#780d0b] text-white shadow-md"
-                              : "border-[#d8c7b7] bg-[#fffaf3] text-[#64100e] hover:-translate-y-0.5 hover:border-[#780d0b]/50"
+                            ? "border-[#780d0b] bg-[#780d0b] text-white shadow-md"
+                            : "border-[#d8c7b7] bg-[#fffaf3] text-[#64100e] hover:-translate-y-0.5 hover:border-[#780d0b]/50"
                             }`}
                         >
                           <span className="block text-sm font-semibold leading-tight">
@@ -1863,7 +1903,10 @@ const openBuilderWithoutTheme = (pkg: Package) => {
                   </h3>
                   <div className="mt-7 flex gap-4 border-b border-[#780d0b]/10 pb-6">
                     <img
-                      src={selected.image}
+                      src={selected.image.replace("-900.webp", "-480.webp")}
+                      width={96}
+                      height={96}
+                      decoding="async"
                       alt=""
                       className="h-24 w-24 object-cover"
                     />
