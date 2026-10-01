@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
-:root { --background: #f8f2e9; --foreground: #321c19; }
+/* ==========================================================================
+   TOKENS
+   ========================================================================== */
+
+:root {
+  --background: #f8f2e9;
+  --foreground: #321c19;
+  --header-height: 78px;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -9,54 +17,248 @@
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--background); color: var(--foreground); font-family: "Avenir Next", Avenir, "Segoe UI", Helvetica, Arial, sans-serif; }
-button, input, textarea, select { font: inherit; }
-button, summary { -webkit-tap-highlight-color: transparent; }
-button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #f2c44c; outline-offset: 3px; }
+/* ==========================================================================
+   BASE
+   ========================================================================== */
 
-.eyebrow { display: flex; align-items: center; gap: .75rem; color: #9b3d20; font-size: .68rem; font-weight: 800; letter-spacing: .23em; text-transform: uppercase; }
-.eyebrow::before { content: ""; width: 2.4rem; height: 1px; background: currentColor; }
-.section-title { margin-top: .75rem; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: clamp(2.8rem, 5vw, 5.3rem); line-height: .95; letter-spacing: -.045em; color: #64100e; }
-.section-title em { color: #d96a28; font-weight: 400; }
-.product-card {
-  background: transparent;
-  transition:
-    transform 0.4s ease,
-    filter 0.4s ease;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Los enlaces #paquetes, #faq, etc. no quedan escondidos bajo el header fijo */
+    scroll-padding-top: calc(var(--header-height) + 12px);
+  }
 
-.product-card:hover {
-  transform: translateY(-8px);
-  filter: drop-shadow(0 18px 20px rgba(74, 31, 20, 0.12));
-}
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
 
-.product-card img {
-  will-change: transform;
-}
+  button,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  .product-card,
-  .product-card img {
-    transition: none;
+  :focus-visible {
+    outline: 3px solid #f2c44c;
+    outline-offset: 3px;
   }
 }
-.step-label, .summary-label { color: #a84d27; font-size: .65rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-.step-title { margin-top: .65rem; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1; color: #64100e; }
-.field { display: block; color: #68483f; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-.field span { color: #a88b80; font-weight: 500; text-transform: none; }
-.field input, .field textarea, .field select { display: block; width: 100%; margin-top: .55rem; border: 1px solid #d8c7b7; border-radius: 0; background: #fffdf8; padding: .9rem 1rem; color: #321c19; font-size: .92rem; font-weight: 500; letter-spacing: 0; text-transform: none; transition: border-color .2s, box-shadow .2s; }
-.field input:focus, .field textarea:focus, .field select:focus { border-color: #780d0b; box-shadow: 0 0 0 3px rgba(120,13,11,.08); outline: none; }
-.field small { display: block; margin-top: .35rem; text-align: right; color: #a88b80; font-weight: 500; letter-spacing: 0; }
 
-@keyframes marquee { to { transform: translateX(-50%); } }
-.marquee-track { width: max-content; animation: marquee 25s linear infinite; }
+/* ==========================================================================
+   COMPONENTES
+   Van en @layer components para que las clases de Tailwind (mt-4,
+   justify-center, etc.) puedan sobrescribirlas cuando se usan juntas.
+   ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
-@media (max-width: 767px) { .section-title { font-size: 3rem; } .marquee-track { animation-duration: 18s; } }
+@layer components {
+  /* ---------- Títulos y etiquetas ---------- */
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #9b3d20;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.23em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 2.4rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .section-title {
+    margin-top: 0.75rem;
+    font-family: var(--font-serif);
+    font-size: clamp(2.8rem, 5vw, 5.3rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    color: #64100e;
+  }
+
+  .section-title em {
+    color: #d96a28;
+    font-weight: 400;
+  }
+
+  .step-label,
+  .summary-label {
+    color: #a84d27;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .step-title {
+    margin-top: 0.65rem;
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1;
+    color: #64100e;
+  }
+
+  /* ---------- Tarjetas de paquetes ---------- */
+
+  .product-card {
+    transition:
+      transform 0.4s ease,
+      filter 0.4s ease;
+  }
+
+  /* Solo en dispositivos con cursor: en celular el hover se queda "pegado" */
+  @media (hover: hover) {
+    .product-card:hover {
+      transform: translateY(-8px);
+      filter: drop-shadow(0 18px 20px rgba(74, 31, 20, 0.12));
+    }
+  }
+
+  .package-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(242, 196, 76, 0.45) transparent;
+  }
+
+  .package-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .package-scroll::-webkit-scrollbar-thumb {
+    background: rgba(242, 196, 76, 0.45);
+    border-radius: 999px;
+  }
+
+  /* ---------- Formulario del personalizador ---------- */
+
+  .field {
+    display: block;
+    color: #68483f;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .field span {
+    color: #a88b80;
+    font-weight: 500;
+    text-transform: none;
+  }
+
+  .field input,
+  .field textarea,
+  .field select {
+    display: block;
+    width: 100%;
+    margin-top: 0.55rem;
+    border: 1px solid #d8c7b7;
+    border-radius: 0;
+    background: #fffdf8;
+    padding: 0.9rem 1rem;
+    color: #321c19;
+    /* 16px evita que iPhone haga zoom al tocar el campo */
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: #780d0b;
+    box-shadow: 0 0 0 3px rgba(120, 13, 11, 0.08);
+    outline: none;
+  }
+
+  /* Muestra el error solo después de que la persona escribió algo */
+  .field input:user-invalid,
+  .field textarea:user-invalid {
+    border-color: #b3261e;
+  }
+
+  .field small {
+    display: block;
+    margin-top: 0.35rem;
+    text-align: right;
+    color: #a88b80;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  /* ---------- Carrusel de ocasiones ---------- */
+
+  .occasion-slider {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .occasion-track {
+    display: flex;
+    width: max-content;
+    gap: 20px;
+    padding-inline: 20px;
+    animation: occasion-scroll 42s linear infinite;
+  }
+
+  .occasion-slider:hover .occasion-track,
+  .occasion-slider:focus-within .occasion-track {
+    animation-play-state: paused;
+  }
+
+  .occasion-card {
+    width: 310px;
+    flex-shrink: 0;
+    transition:
+      transform 0.5s ease,
+      box-shadow 0.5s ease;
+  }
+
+  .occasion-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 50px rgba(78, 28, 20, 0.14);
+  }
+}
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes occasion-scroll {
+  to {
+    transform: translateX(calc(-50% - 10px));
+  }
+}
+
+@keyframes hero-image-motion {
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes hero-float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
 
 @keyframes manana-floating {
+
   0%,
   100% {
     transform: translateY(0) rotate(-2deg);
@@ -67,187 +269,49 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   }
 }
 
-.manana-floating-logo {
-  animation: manana-floating 3s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .manana-floating-logo {
-    animation: none;
-  }
-}
-
 @keyframes process-step-enter {
   from {
     opacity: 0;
     transform: translateX(24px);
   }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
-@keyframes process-step-progress {
-  from {
-    transform: scaleX(0);
-  }
+.marquee-track {
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
 
-  to {
-    transform: scaleX(1);
-  }
+.hero-image-motion {
+  animation: hero-image-motion 12s ease-in-out infinite;
+}
+
+.hero-float {
+  animation: hero-float 4s ease-in-out infinite;
+}
+
+.manana-floating-logo {
+  animation: manana-floating 3s ease-in-out infinite;
 }
 
 .process-step-animation {
   animation: process-step-enter 500ms ease-out;
 }
 
-.process-step-progress {
-  transform-origin: left;
-  animation: process-step-progress 4.5s linear forwards;
-}
+/* ==========================================================================
+   CELULAR
+   Fuera de @layer a propósito: así le gana a max-h-0 / opacity-0 de Tailwind.
+   ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  .process-step-animation,
-  .process-step-progress {
-    animation: none;
-  }
-}
-
-.package-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(242, 196, 76, 0.45) transparent;
-}
-
-.package-scroll::-webkit-scrollbar {
-  width: 4px;
-}
-
-.package-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.package-scroll::-webkit-scrollbar-thumb {
-  background: rgba(242, 196, 76, 0.45);
-  border-radius: 999px;
-}
-
-/* Movimiento muy suave de la fotografía principal */
-@keyframes heroImageMotion {
-  0% {
-    transform: scale(1);
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 3rem;
   }
 
-  50% {
-    transform: scale(1.035);
+  .marquee-track {
+    animation-duration: 18s;
   }
 
-  100% {
-    transform: scale(1);
-  }
-}
-
-.hero-image-motion {
-  animation: heroImageMotion 12s ease-in-out infinite;
-  will-change: transform;
-}
-
-
-/* Círculo amarillo */
-@keyframes heroFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.hero-float {
-  animation: heroFloat 4s ease-in-out infinite;
-  will-change: transform;
-}
-
-
-/* Sello Mañana Rica */
-@keyframes heroFloatSlow {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-7px) rotate(2deg);
-  }
-}
-
-.hero-float-slow {
-  animation: heroFloatSlow 5.5s ease-in-out infinite;
-  will-change: transform;
-}
-
-
-/* Accesibilidad */
-@media (prefers-reduced-motion: reduce) {
-  .hero-image-motion,
-  .hero-float,
-  .hero-float-slow {
-    animation: none;
-  }
-}
-
-/* ========================================
-   CARRUSEL DE OCASIONES - MAÑANA RICA
-======================================== */
-
-.occasion-slider {
-  width: 100%;
-  overflow: hidden;
-}
-
-.occasion-track {
-  display: flex;
-  width: max-content;
-  gap: 20px;
-  padding-inline: 20px;
-  animation: occasion-scroll 42s linear infinite;
-}
-
-.occasion-slider:hover .occasion-track {
-  animation-play-state: paused;
-}
-
-.occasion-card {
-  width: 310px;
-  flex-shrink: 0;
-  cursor: pointer;
-  transition:
-    transform 0.5s ease,
-    box-shadow 0.5s ease;
-}
-
-.occasion-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 22px 50px rgba(78, 28, 20, 0.14);
-}
-
-@keyframes occasion-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(calc(-50% - 10px));
-  }
-}
-
-
-/* CELULAR */
-
-@media (max-width: 768px) {
+  /* El carrusel se desliza con el dedo en lugar de moverse solo */
   .occasion-slider {
     overflow-x: auto;
     scrollbar-width: none;
@@ -261,7 +325,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
   .occasion-track {
     animation: none;
-    padding-inline: 20px;
+  }
+
+  /* Sin animación no hace falta la copia duplicada de las tarjetas */
+  .occasion-card[aria-hidden="true"] {
+    display: none;
   }
 
   .occasion-card {
@@ -270,23 +338,37 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     scroll-snap-align: center;
   }
 
-  /* En celular mostramos la descripción siempre */
+  /* En celular no hay hover: la frase de cada ocasión se ve siempre */
   .occasion-card p {
     max-height: 80px;
+    opacity: 1;
   }
 }
 
-
-/* ACCESIBILIDAD:
-   desactiva movimiento si el usuario lo solicita */
+/* ==========================================================================
+   MOVIMIENTO REDUCIDO
+   Para quienes desactivan las animaciones en su sistema.
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .occasion-track {
-    animation: none;
+  html {
+    scroll-behavior: auto;
   }
 
-  .occasion-card,
-  .occasion-card img {
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* El carrusel queda quieto, así que se vuelve deslizable y sin duplicados */
+  .occasion-slider {
+    overflow-x: auto;
+  }
+
+  .occasion-card[aria-hidden="true"] {
+    display: none;
   }
 }
