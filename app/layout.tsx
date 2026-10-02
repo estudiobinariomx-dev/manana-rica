@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { themeInitScript } from "./theme/seasons";
 
 // Dominio público del sitio. "mañanarica.com" se escribe así en formato punycode.
 // Cámbialo si el sitio vive en otra dirección: de aquí salen las URLs absolutas
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      // { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/icon.png", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
@@ -72,7 +73,13 @@ const localBusiness = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="es-MX">
+    // suppressHydrationWarning: el script de abajo agrega data-season y data-mode
+    // a <html> antes de que React cargue; sin esto React avisaría de la diferencia.
+    <html lang="es-MX" suppressHydrationWarning>
+      <head>
+        {/* Elige temporada y modo claro/oscuro antes de pintar, para que no parpadee */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="antialiased">
         {children}
         <script

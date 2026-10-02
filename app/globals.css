@@ -1,20 +1,392 @@
 @import "tailwindcss";
+@import "@fontsource-variable/fraunces/opsz.css";
+@import "@fontsource-variable/fraunces/opsz-italic.css";
+@import "@fontsource-variable/nunito-sans/index.css";
+
+/* La variante dark: de Tailwind sigue al botón de modo (data-mode), no solo al sistema */
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
 /* ==========================================================================
-   TOKENS
+   COLORES
+   Toda la página usa estos tokens (bg-brand, text-heading, border-line…).
+   Cambian solos según el modo (claro/oscuro) y la temporada.
    ========================================================================== */
 
+/* ---------- Normal · claro ---------- */
 :root {
-  --background: #f8f2e9;
-  --foreground: #321c19;
+  --c-bg: #f8f2e9;
+  --c-surface: #fffaf3;
+  --c-surface-2: #eadac7;
+  --c-surface-3: #f8eee1;
+  --c-field: #fffdf8;
+  --c-ink: #321c19;
+  --c-heading: #64100e;
+  --c-muted: #785c53;
+  --c-muted-2: #a88b80;
+  --c-line: #d8c7b7;
+  --c-edge: #780d0b;
+  /* bordes suaves: se usa con opacidad (border-edge/15) */
+  --c-brand: #780d0b;
+  --c-brand-hover: #951a16;
+  --c-brand-deep: #64100e;
+  --c-brand-ink: #780d0b;
+  /* texto en color de marca sobre fondo claro */
+  --c-on-brand: #fff8ef;
+  --c-accent: #d96a28;
+  --c-accent-deep: #b25b2b;
+  --c-gold: #f2c44c;
+  --c-on-gold: #64100e;
+  --c-footer: #2f1714;
+  --c-footer-ink: #f8f2e9;
+  --c-footer-muted: #d9bca9;
+
   --header-height: 78px;
+  color-scheme: light;
 }
 
+/* ---------- Normal · oscuro ---------- */
+:root[data-mode="dark"] {
+  --c-bg: #15100f;
+  --c-surface: #1e1715;
+  --c-surface-2: #2a201c;
+  --c-surface-3: #2e211d;
+  --c-field: #191311;
+  --c-ink: #efe3d8;
+  --c-heading: #f7dccb;
+  --c-muted: #c2a99c;
+  --c-muted-2: #8f776c;
+  --c-line: #47362f;
+  --c-edge: #f3e1d3;
+  --c-brand-ink: #f29b86;
+  --c-accent: #f08a4b;
+  --c-accent-deep: #e9a06e;
+  --c-footer: #0c0807;
+  color-scheme: dark;
+}
+
+/* ---------- Amor y amistad: rojo y rosa ---------- */
+:root[data-season="amor"] {
+  --c-brand: #b3123f;
+  --c-brand-hover: #cc1f4f;
+  --c-brand-deep: #7a0b2b;
+  --c-accent: #e8436f;
+  --c-accent-deep: #b81e4c;
+  --c-gold: #ffc2d1;
+  --c-on-gold: #7a0b2b;
+  --c-footer: #2a0712;
+}
+
+:root[data-season="amor"]:not([data-mode="dark"]) {
+  --c-bg: #fdf4f4;
+  --c-surface: #fffafa;
+  --c-surface-2: #f6dde2;
+  --c-surface-3: #fbecef;
+  --c-heading: #7a0b2b;
+  --c-brand-ink: #a8103a;
+  --c-edge: #b3123f;
+}
+
+:root[data-season="amor"][data-mode="dark"] {
+  --c-bg: #170b0f;
+  --c-surface: #211217;
+  --c-surface-2: #2d1820;
+  --c-surface-3: #321b23;
+  --c-field: #1a0d12;
+  --c-heading: #ffdbe4;
+  --c-brand-ink: #ff8fab;
+  --c-accent: #ff6b8f;
+  --c-accent-deep: #ff9db5;
+  --c-line: #4a2a35;
+  --c-edge: #f8dbe3;
+  --c-footer: #0e0508;
+}
+
+/* ---------- Día del Niño: colores de juguete ---------- */
+:root[data-season="ninos"] {
+  --c-brand: #2563eb;
+  --c-brand-hover: #1d4ed8;
+  --c-brand-deep: #1e3a8a;
+  --c-accent: #f97316;
+  --c-accent-deep: #c2410c;
+  --c-gold: #facc15;
+  --c-on-gold: #1e3a8a;
+  --c-footer: #0f1b3d;
+}
+
+:root[data-season="ninos"]:not([data-mode="dark"]) {
+  --c-bg: #f5f8ff;
+  --c-surface: #fbfdff;
+  --c-surface-2: #dce7fb;
+  --c-surface-3: #ebf1fd;
+  --c-heading: #1e3a8a;
+  --c-brand-ink: #1d4ed8;
+  --c-edge: #2563eb;
+}
+
+:root[data-season="ninos"][data-mode="dark"] {
+  --c-bg: #0c1120;
+  --c-surface: #131a2c;
+  --c-surface-2: #1b2440;
+  --c-surface-3: #1f2946;
+  --c-field: #0f1526;
+  --c-heading: #dbe7ff;
+  --c-brand-ink: #93b4ff;
+  --c-accent: #fb923c;
+  --c-accent-deep: #fdba74;
+  --c-line: #2c3a5e;
+  --c-edge: #dbe7ff;
+  --c-footer: #060a14;
+}
+
+/* ---------- Día de las Madres: rosa palo y coral ---------- */
+:root[data-season="mama"] {
+  --c-brand: #a8456b;
+  --c-brand-hover: #bf557d;
+  --c-brand-deep: #6e2944;
+  --c-accent: #e07a5f;
+  --c-accent-deep: #b85a42;
+  --c-gold: #ffd6e0;
+  --c-on-gold: #6e2944;
+  --c-footer: #2b1019;
+}
+
+:root[data-season="mama"]:not([data-mode="dark"]) {
+  --c-bg: #fcf6f4;
+  --c-surface: #fffbfa;
+  --c-surface-2: #f2dde1;
+  --c-surface-3: #f9ecee;
+  --c-heading: #6e2944;
+  --c-brand-ink: #9a3d61;
+  --c-edge: #a8456b;
+}
+
+:root[data-season="mama"][data-mode="dark"] {
+  --c-bg: #160e11;
+  --c-surface: #20151a;
+  --c-surface-2: #2c1d24;
+  --c-surface-3: #312028;
+  --c-field: #1a1115;
+  --c-heading: #fde0ea;
+  --c-brand-ink: #f3a6c3;
+  --c-accent: #f29a80;
+  --c-accent-deep: #f6b6a3;
+  --c-line: #4a3039;
+  --c-edge: #f8e0e8;
+  --c-footer: #0d0709;
+}
+
+/* ---------- Día del Padre: azul marino y mostaza ---------- */
+:root[data-season="papa"] {
+  --c-brand: #22395c;
+  --c-brand-hover: #2d4a75;
+  --c-brand-deep: #172840;
+  --c-accent: #c77d2b;
+  --c-accent-deep: #9a5e1e;
+  --c-gold: #e9b44c;
+  --c-on-gold: #172840;
+  --c-footer: #0f1a2b;
+}
+
+:root[data-season="papa"]:not([data-mode="dark"]) {
+  --c-bg: #f5f4f0;
+  --c-surface: #fcfbf8;
+  --c-surface-2: #dfe3e8;
+  --c-surface-3: #eceef1;
+  --c-heading: #172840;
+  --c-brand-ink: #22395c;
+  --c-edge: #22395c;
+}
+
+:root[data-season="papa"][data-mode="dark"] {
+  --c-bg: #0d1117;
+  --c-surface: #151b24;
+  --c-surface-2: #1d2532;
+  --c-surface-3: #212a38;
+  --c-field: #10151d;
+  --c-heading: #e1e9f5;
+  --c-brand-ink: #9db9e0;
+  --c-accent: #e09a4a;
+  --c-accent-deep: #ebb57a;
+  --c-line: #2f3b4d;
+  --c-edge: #dfe7f2;
+  --c-footer: #06090d;
+}
+
+/* ---------- Fiestas patrias: verde, blanco y rojo ---------- */
+:root[data-season="patrias"] {
+  --c-brand: #006847;
+  --c-brand-hover: #0a7d57;
+  --c-brand-deep: #004d34;
+  --c-accent: #ce1126;
+  --c-accent-deep: #a50e1f;
+  --c-gold: #f5c518;
+  --c-on-gold: #004d34;
+  --c-footer: #00261a;
+}
+
+:root[data-season="patrias"]:not([data-mode="dark"]) {
+  --c-bg: #f7f6f1;
+  --c-surface: #fdfcf9;
+  --c-surface-2: #e0e9e2;
+  --c-surface-3: #eef3ee;
+  --c-heading: #004d34;
+  --c-brand-ink: #006847;
+  --c-edge: #006847;
+}
+
+:root[data-season="patrias"][data-mode="dark"] {
+  --c-bg: #0b1310;
+  --c-surface: #121c18;
+  --c-surface-2: #1a2721;
+  --c-surface-3: #1e2c25;
+  --c-field: #0e1713;
+  --c-heading: #e0f2e8;
+  --c-brand-ink: #7fd1a8;
+  --c-accent: #ff5a6a;
+  --c-accent-deep: #ff8a96;
+  --c-line: #2c3f36;
+  --c-edge: #d9eee2;
+  --c-footer: #030a07;
+}
+
+/* ---------- Halloween: morado, naranja y negro ---------- */
+:root[data-season="halloween"] {
+  --c-brand: #3a1d4d;
+  --c-brand-hover: #4d2866;
+  --c-brand-deep: #2a1238;
+  --c-accent: #e8701a;
+  --c-accent-deep: #b8520f;
+  --c-gold: #ff9f1c;
+  --c-on-gold: #2a1238;
+  --c-footer: #1a0f22;
+}
+
+:root[data-season="halloween"]:not([data-mode="dark"]) {
+  --c-bg: #f6f0ea;
+  --c-surface: #fdf9f5;
+  --c-surface-2: #e8dce6;
+  --c-surface-3: #f3eaf0;
+  --c-heading: #2a1238;
+  --c-brand-ink: #5b2a7a;
+  --c-edge: #3a1d4d;
+}
+
+:root[data-season="halloween"][data-mode="dark"] {
+  --c-bg: #120d16;
+  --c-surface: #1b1420;
+  --c-surface-2: #261c2d;
+  --c-surface-3: #2a1f31;
+  --c-field: #160f1b;
+  --c-heading: #f1e2f7;
+  --c-brand-ink: #c79bf0;
+  --c-accent: #ff8a3d;
+  --c-accent-deep: #ffad70;
+  --c-line: #3d2f45;
+  --c-edge: #eadff0;
+  --c-footer: #0b070e;
+}
+
+/* ---------- Día de Muertos: rosa mexicano y cempasúchil ---------- */
+:root[data-season="muertos"] {
+  --c-brand: #a8125a;
+  --c-brand-hover: #c41d6c;
+  --c-brand-deep: #6b0f3d;
+  --c-accent: #ea7a00;
+  --c-accent-deep: #b85c00;
+  --c-gold: #ffb703;
+  --c-on-gold: #4a0a2a;
+  --c-footer: #2a0a1b;
+}
+
+:root[data-season="muertos"]:not([data-mode="dark"]) {
+  --c-bg: #fbf3ea;
+  --c-surface: #fffaf5;
+  --c-surface-2: #f5dccf;
+  --c-surface-3: #fbe9e1;
+  --c-heading: #6b0f3d;
+  --c-brand-ink: #a3124f;
+  --c-edge: #a8125a;
+}
+
+:root[data-season="muertos"][data-mode="dark"] {
+  --c-bg: #160c11;
+  --c-surface: #20131a;
+  --c-surface-2: #2c1a24;
+  --c-surface-3: #301c27;
+  --c-field: #1a0f15;
+  --c-heading: #ffd9e6;
+  --c-brand-ink: #ff8fbf;
+  --c-accent: #ffa53d;
+  --c-accent-deep: #ffbf73;
+  --c-line: #4a2c3b;
+  --c-edge: #f6dbe6;
+  --c-footer: #0e050a;
+}
+
+/* ---------- Navidad: verde pino, rojo y dorado ---------- */
+:root[data-season="navidad"] {
+  --c-brand: #1e4d33;
+  --c-brand-hover: #286444;
+  --c-brand-deep: #143823;
+  --c-accent: #c62832;
+  --c-accent-deep: #9e1c25;
+  --c-gold: #e2b33c;
+  --c-on-gold: #143823;
+  --c-footer: #0f2418;
+}
+
+:root[data-season="navidad"]:not([data-mode="dark"]) {
+  --c-bg: #f7f4ee;
+  --c-surface: #fdfbf7;
+  --c-surface-2: #e2e6d8;
+  --c-surface-3: #eff1e7;
+  --c-heading: #143823;
+  --c-brand-ink: #1e5a3a;
+  --c-edge: #1e4d33;
+}
+
+:root[data-season="navidad"][data-mode="dark"] {
+  --c-bg: #0e1411;
+  --c-surface: #151d18;
+  --c-surface-2: #1d2821;
+  --c-surface-3: #212d25;
+  --c-field: #111814;
+  --c-heading: #e3f2e7;
+  --c-brand-ink: #8fd1a8;
+  --c-accent: #ff6b6b;
+  --c-accent-deep: #ff9494;
+  --c-line: #33443a;
+  --c-edge: #dcefe2;
+  --c-footer: #07100b;
+}
+
+/* Tokens disponibles como clases de Tailwind: bg-brand, text-heading, border-line… */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: "Avenir Next", Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-surface-3: var(--c-surface-3);
+  --color-ink: var(--c-ink);
+  --color-heading: var(--c-heading);
+  --color-muted: var(--c-muted);
+  --color-line: var(--c-line);
+  --color-edge: var(--c-edge);
+  --color-brand: var(--c-brand);
+  --color-brand-hover: var(--c-brand-hover);
+  --color-brand-deep: var(--c-brand-deep);
+  --color-brand-ink: var(--c-brand-ink);
+  --color-on-brand: var(--c-on-brand);
+  --color-accent: var(--c-accent);
+  --color-accent-deep: var(--c-accent-deep);
+  --color-gold: var(--c-gold);
+  --color-on-gold: var(--c-on-gold);
+  --color-footer: var(--c-footer);
+  --color-footer-ink: var(--c-footer-ink);
+  --color-footer-muted: var(--c-footer-muted);
+
+  /* Tipografía: Fraunces para títulos, Nunito Sans para texto */
+  --font-sans: "Nunito Sans Variable", "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-serif: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
 }
 
 /* ==========================================================================
@@ -30,8 +402,9 @@
 
   body {
     margin: 0;
-    background: var(--background);
-    color: var(--foreground);
+    background: var(--c-bg);
+    color: var(--c-ink);
+    transition: background-color 0.3s ease, color 0.3s ease;
     font-family: var(--font-sans);
   }
 
@@ -41,7 +414,7 @@
   }
 
   :focus-visible {
-    outline: 3px solid #f2c44c;
+    outline: 3px solid var(--c-gold);
     outline-offset: 3px;
   }
 }
@@ -59,7 +432,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: #9b3d20;
+    color: var(--c-accent-deep);
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.23em;
@@ -78,18 +451,23 @@
     font-family: var(--font-serif);
     font-size: clamp(2.8rem, 5vw, 5.3rem);
     line-height: 0.95;
-    letter-spacing: -0.045em;
-    color: #64100e;
+    letter-spacing: -0.035em;
+    color: var(--c-heading);
+  }
+
+  .section-title,
+  .step-title {
+    font-variation-settings: "opsz" 96;
   }
 
   .section-title em {
-    color: #d96a28;
+    color: var(--c-accent);
     font-weight: 400;
   }
 
   .step-label,
   .summary-label {
-    color: #a84d27;
+    color: var(--c-accent-deep);
     font-size: 0.65rem;
     font-weight: 800;
     letter-spacing: 0.18em;
@@ -101,7 +479,7 @@
     font-family: var(--font-serif);
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1;
-    color: #64100e;
+    color: var(--c-heading);
   }
 
   /* ---------- Tarjetas de paquetes ---------- */
@@ -122,7 +500,7 @@
 
   .package-scroll {
     scrollbar-width: thin;
-    scrollbar-color: rgba(242, 196, 76, 0.45) transparent;
+    scrollbar-color: color-mix(in srgb, var(--c-gold) 45%, transparent) transparent;
   }
 
   .package-scroll::-webkit-scrollbar {
@@ -130,7 +508,7 @@
   }
 
   .package-scroll::-webkit-scrollbar-thumb {
-    background: rgba(242, 196, 76, 0.45);
+    background: color-mix(in srgb, var(--c-gold) 45%, transparent);
     border-radius: 999px;
   }
 
@@ -138,7 +516,7 @@
 
   .field {
     display: block;
-    color: #68483f;
+    color: var(--c-muted);
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -146,7 +524,7 @@
   }
 
   .field span {
-    color: #a88b80;
+    color: var(--c-muted-2);
     font-weight: 500;
     text-transform: none;
   }
@@ -157,11 +535,11 @@
     display: block;
     width: 100%;
     margin-top: 0.55rem;
-    border: 1px solid #d8c7b7;
+    border: 1px solid var(--c-line);
     border-radius: 0;
-    background: #fffdf8;
+    background: var(--c-field);
     padding: 0.9rem 1rem;
-    color: #321c19;
+    color: var(--c-ink);
     /* 16px evita que iPhone haga zoom al tocar el campo */
     font-size: 1rem;
     font-weight: 500;
@@ -175,8 +553,8 @@
   .field input:focus,
   .field textarea:focus,
   .field select:focus {
-    border-color: #780d0b;
-    box-shadow: 0 0 0 3px rgba(120, 13, 11, 0.08);
+    border-color: var(--c-brand-ink);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-brand-ink) 12%, transparent);
     outline: none;
   }
 
@@ -190,7 +568,7 @@
     display: block;
     margin-top: 0.35rem;
     text-align: right;
-    color: #a88b80;
+    color: var(--c-muted-2);
     font-weight: 500;
     letter-spacing: 0;
   }
@@ -295,6 +673,39 @@
 
 .process-step-animation {
   animation: process-step-enter 500ms ease-out;
+}
+
+@keyframes season-float {
+  50% {
+    transform: translateY(-12px) rotate(8deg);
+  }
+}
+
+@keyframes garland-sway {
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes light-twinkle {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.season-floater {
+  animation: season-float 5s ease-in-out infinite;
+  filter: drop-shadow(0 6px 8px rgb(0 0 0 / 0.15));
+}
+
+.garland-sway {
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: garland-sway 4s ease-in-out infinite;
+}
+
+.light-twinkle {
+  animation: light-twinkle 1.8s ease-in-out infinite;
 }
 
 /* ==========================================================================
