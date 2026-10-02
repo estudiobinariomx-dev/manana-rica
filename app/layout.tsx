@@ -1,11 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-
-// Dominio público del sitio. "mañanarica.com" se escribe así en formato punycode.
-// Cámbialo si el sitio vive en otra dirección: de aquí salen las URLs absolutas
-// que usan WhatsApp, Facebook e Instagram para mostrar la vista previa del enlace.
-const SITE_URL = "https://xn--maanarica-m6a.com";
+import { SITE_URL } from "./site";
 
 const title = "Mañana Rica | Desayunos sorpresa en Morelia";
 const description =
@@ -35,7 +31,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      // { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/icon.png", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
