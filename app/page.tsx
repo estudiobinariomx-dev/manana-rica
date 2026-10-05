@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { SOCIAL_LINKS } from "./site";
 import { seasonContent } from "./theme/seasons";
 import { ModeToggle, SeasonFloaters, SeasonGarland, useSeason } from "./theme/theme-client";
 
@@ -324,6 +325,54 @@ function ArrowIcon() {
   );
 }
 
+function ArrowUpIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 19V5M6 11l6-6 6 6" />
+    </svg>
+  );
+}
+
+/* Íconos de redes (24×24, usan currentColor) */
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.9">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="currentColor">
+      <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1Z" />
+    </svg>
+  );
+}
+
+function TikTokIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="currentColor">
+      <path d="M16.6 3c.3 2.2 1.6 3.6 3.9 3.8v3.1c-1.4.1-2.7-.3-3.9-1.1v6.1c0 3.3-2.4 5.6-5.6 5.6S5.4 18.1 5.4 15c0-3.3 2.7-5.8 6.3-5.4v3.2c-1.6-.4-3.1.6-3.1 2.2 0 1.3 1 2.3 2.3 2.3 1.4 0 2.4-.9 2.4-2.8V3h3.3Z" />
+    </svg>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
+      <path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.4-4.3a8.5 8.5 0 1 1 15.6-4.5Z" />
+      <path
+        fill="currentColor"
+        stroke="none"
+        d="M9.3 7.6c.2-.3.4-.4.7-.4h.5c.2 0 .4 0 .6.5l.7 1.7c.1.2.1.4 0 .6l-.5.6c-.1.2-.2.3 0 .6.5.9 1.6 2 2.6 2.5.3.1.5.1.6 0l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .4-.1 1.2-.6 1.6-.5.5-1.4.8-2.2.6-1.1-.2-2.7-.9-4-2.2-1.4-1.4-2.2-3-2.4-4-.2-.9.2-1.6.6-2Z"
+      />
+    </svg>
+  );
+}
+
 function BagIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -371,6 +420,7 @@ export default function Home() {
   // Interfaz
   const [revealedPackage, setRevealedPackage] = useState<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
   const [activeProcessStep, setActiveProcessStep] = useState(0);
 
@@ -389,6 +439,26 @@ export default function Home() {
     ];
   }, [seasonText.featuredOccasion]);
 
+  // Foto del banner "pensé en ti": en temporadas con ocasión destacada (Madres, Padre,
+  // Amor y amistad) usa la foto de esa ocasión; el resto del año, la foto del producto.
+  const bannerPhoto = useMemo(() => {
+    const featured = occasions.find((item) => item.name === seasonText.featuredOccasion);
+    if (featured) {
+      return {
+        src: featured.image,
+        srcSet: srcSetFor(featured.image),
+        alt: `Desayuno sorpresa para ${featured.name}`,
+        position: "object-center",
+      };
+    }
+    return {
+      src: "/img/hero-porquesi-1086.webp",
+      srcSet: "/img/hero-porquesi-600.webp 600w, /img/hero-porquesi-1086.webp 1086w",
+      alt: "Desayuno sorpresa con tarjeta de Mañana Rica: pequeños detalles, grandes historias",
+      position: "object-[center_72%]",
+    };
+  }, [seasonText.featuredOccasion]);
+
   // Avanza el paso de "Cómo funciona". Se reinicia cada vez que cambia,
   // así un clic del usuario no es reemplazado de inmediato.
   useEffect(() => {
@@ -399,9 +469,13 @@ export default function Home() {
     return () => window.clearTimeout(timeout);
   }, [activeProcessStep]);
 
-  // Cambia el estilo del header al bajar
+  // Cambia el estilo del header y muestra el botón de volver arriba al bajar
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+      // El botón de "volver arriba" aparece después de bajar más o menos una pantalla
+      setShowBackToTop(window.scrollY > window.innerHeight);
+    };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -505,9 +579,24 @@ export default function Home() {
   );
   const whatsappOrderUrl = whatsappLink(whatsappMessage);
 
+  // Redes que se muestran en el footer (solo las que tienen link; se editan en app/site.ts)
+  const socialNetworks = [
+    { name: "Instagram", url: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
+    { name: "Facebook", url: SOCIAL_LINKS.facebook, Icon: FacebookIcon },
+    { name: "TikTok", url: SOCIAL_LINKS.tiktok, Icon: TikTokIcon },
+    { name: "WhatsApp", url: whatsappInfoUrl ?? "", Icon: WhatsAppIcon },
+  ].filter((network) => network.url);
+
   // El botón flotante aparece al bajar, y se oculta en el footer
   // y mientras el personalizador está abierto.
   const showFloatingButton = isScrolled && !footerVisible && !drawerOpen;
+
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    // Lleva el foco al inicio para quien navega con teclado o lector de pantalla
+    document.querySelector<HTMLElement>("header a")?.focus({ preventScroll: true });
+  };
   const currentProcessStep = processSteps[activeProcessStep]!;
 
   // Abre el personalizador. La temática se reemplaza siempre:
@@ -548,8 +637,8 @@ export default function Home() {
       {/* ============================ HEADER ============================ */}
       <header
         className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-xl transition-all duration-500 ${isScrolled
-            ? "border-brand-ink bg-brand/95 shadow-[0_8px_30px_rgba(70,10,10,0.18)]"
-            : "border-edge/10 bg-bg/90"
+          ? "border-brand-ink bg-brand/95 shadow-[0_8px_30px_rgba(70,10,10,0.18)]"
+          : "border-edge/10 bg-bg/90"
           }`}
       >
         <div className="mx-auto flex h-[78px] max-w-[1440px] items-center justify-between px-5 md:px-10">
@@ -607,8 +696,8 @@ export default function Home() {
               onClick={() => openBuilder(selected)}
               aria-label="Arma tu sorpresa"
               className={`group flex items-center gap-2 border px-4 py-2.5 text-sm font-semibold transition duration-300 ${isScrolled
-                  ? "border-white text-white hover:bg-white hover:text-brand"
-                  : "border-brand-ink text-brand-ink hover:bg-brand hover:text-white"
+                ? "border-white text-white hover:bg-white hover:text-brand"
+                : "border-brand-ink text-brand-ink hover:bg-brand hover:text-white"
                 }`}
             >
               <BagIcon />
@@ -636,8 +725,8 @@ export default function Home() {
             empiece <em className="font-normal text-accent">rico.</em>
           </h1>
           <p className="mt-8 max-w-lg text-base leading-7 text-muted md:text-lg">
-            Desayunos sorpresa que puedes hacer tan únicos como esa persona. Elige, personaliza y
-            agenda en unos minutos.
+            Desayunos sorpresa a domicilio en Morelia, Michoacán, tan únicos como esa persona.
+            Elige, personaliza y agenda tu regalo en unos minutos.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <button
@@ -666,7 +755,7 @@ export default function Home() {
               height={1448}
               fetchPriority="high"
               decoding="async"
-              alt="Desayuno sorpresa Mañana Rica"
+              alt="Desayuno sorpresa a domicilio en Morelia con croissant, fruta fresca, waffles y jugo de naranja"
               className="hero-image-motion h-full w-full object-cover"
             />
           </div>
@@ -750,8 +839,8 @@ export default function Home() {
                   {/* Contenido del paquete: en celular con el botón, en escritorio al pasar el cursor */}
                   <div
                     className={`absolute inset-0 z-20 flex flex-col bg-brand-deep/95 p-5 text-on-brand transition duration-500 ${revealed
-                        ? "pointer-events-auto translate-y-0 opacity-100"
-                        : "pointer-events-none translate-y-8 opacity-0"
+                      ? "pointer-events-auto translate-y-0 opacity-100"
+                      : "pointer-events-none translate-y-8 opacity-0"
                       } md:pointer-events-none md:translate-y-8 md:opacity-0 md:group-hover:pointer-events-auto md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-within:pointer-events-auto md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100`}
                   >
                     <p className="text-[10px] font-bold uppercase tracking-[0.19em] text-gold">
@@ -1009,8 +1098,8 @@ export default function Home() {
                   >
                     <span
                       className={`relative z-10 grid h-14 w-14 place-items-center rounded-full border font-serif text-lg transition-all duration-500 ${isActive
-                          ? "border-brand-ink bg-brand text-gold shadow-[0_8px_25px_rgba(120,13,11,0.18)]"
-                          : "border-edge/25 bg-surface-2 text-brand-ink group-hover:border-brand-ink"
+                        ? "border-brand-ink bg-brand text-gold shadow-[0_8px_25px_rgba(120,13,11,0.18)]"
+                        : "border-edge/25 bg-surface-2 text-brand-ink group-hover:border-brand-ink"
                         }`}
                     >
                       {processStep.number}
@@ -1082,15 +1171,15 @@ export default function Home() {
           </div>
           <div className="relative min-h-80">
             <img
-              src="/img/rayito_de_sol-900.webp"
-              srcSet={srcSetFor("/img/rayito_de_sol-900.webp")}
+              src={bannerPhoto.src}
+              srcSet={bannerPhoto.srcSet}
               sizes="(min-width: 1024px) 45vw, 100vw"
               width={900}
-              height={900}
+              height={1200}
               loading="lazy"
               decoding="async"
-              alt="Paquete Rayito de Sol"
-              className="absolute inset-0 h-full w-full object-cover object-center"
+              alt={bannerPhoto.alt}
+              className={`absolute inset-0 h-full w-full object-cover ${bannerPhoto.position}`}
             />
           </div>
         </div>
@@ -1193,6 +1282,30 @@ export default function Home() {
               Hablar por WhatsApp <ArrowIcon />
             </a>
           )}
+
+          {socialNetworks.length > 0 && (
+            <div className="flex flex-col items-center gap-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-footer-muted">
+                Síguenos
+              </p>
+              <ul className="flex items-center gap-3">
+                {socialNetworks.map(({ name, url, Icon }) => (
+                  <li key={name}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Mañana Rica en ${name}`}
+                      title={name}
+                      className="grid h-11 w-11 place-items-center rounded-full border border-white/20 text-footer-ink transition duration-300 hover:-translate-y-0.5 hover:border-gold hover:bg-gold hover:text-on-gold"
+                    >
+                      <Icon />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="mx-auto mt-10 flex max-w-[1440px] flex-col items-center justify-center gap-2 border-t border-white/10 pt-5 text-center text-[11px] text-footer-muted md:flex-row md:gap-6">
@@ -1206,6 +1319,23 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* ======================== VOLVER ARRIBA ======================== */}
+      {/* Va encima del botón de WhatsApp; cuando ese se oculta (en el footer) baja a su lugar */}
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label="Volver arriba"
+        title="Volver arriba"
+        tabIndex={showBackToTop && !drawerOpen ? 0 : -1}
+        aria-hidden={!showBackToTop || drawerOpen}
+        className={`fixed z-40 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-brand text-on-brand shadow-[0_10px_25px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover md:h-12 md:w-12 ${showFloatingButton
+            ? "bottom-[84px] right-[22px] md:bottom-[138px] md:right-[54px]"
+            : "bottom-5 right-5 md:bottom-8 md:right-8"
+          } ${showBackToTop && !drawerOpen ? "opacity-100" : "pointer-events-none translate-y-3 opacity-0"}`}
+      >
+        <ArrowUpIcon />
+      </button>
+
       {/* ===================== BOTÓN FLOTANTE WHATSAPP ==================== */}
       {whatsappInfoUrl && (
         <a
@@ -1216,8 +1346,8 @@ export default function Home() {
           aria-hidden={!showFloatingButton}
           tabIndex={showFloatingButton ? 0 : -1}
           className={`group fixed bottom-4 right-4 z-40 rounded-full bg-surface p-1 shadow-[0_12px_35px_rgba(74,31,20,0.28)] transition duration-300 hover:scale-110 md:bottom-8 md:right-8 md:p-1.5 ${showFloatingButton
-              ? "translate-y-0 opacity-100"
-              : "pointer-events-none translate-y-4 opacity-0"
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-4 opacity-0"
             }`}
         >
           <img
@@ -1353,8 +1483,8 @@ export default function Home() {
                             onClick={() => setOccasion(item.name)}
                             aria-pressed={isSelected}
                             className={`min-h-[76px] border px-3 py-3 text-left transition duration-300 ${isSelected
-                                ? "border-brand-ink bg-brand text-white shadow-md"
-                                : "border-line bg-surface text-heading hover:-translate-y-0.5 hover:border-edge/50"
+                              ? "border-brand-ink bg-brand text-white shadow-md"
+                              : "border-line bg-surface text-heading hover:-translate-y-0.5 hover:border-edge/50"
                               }`}
                           >
                             <span className="block text-sm font-semibold leading-tight">{item.name}</span>

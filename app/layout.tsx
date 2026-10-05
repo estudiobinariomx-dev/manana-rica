@@ -1,12 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { SITE_URL, SOCIAL_LINKS } from "./site";
 import { themeInitScript } from "./theme/seasons";
-
-// Dominio público del sitio. "mañanarica.com" se escribe así en formato punycode.
-// Cámbialo si el sitio vive en otra dirección: de aquí salen las URLs absolutas
-// que usan WhatsApp, Facebook e Instagram para mostrar la vista previa del enlace.
-const SITE_URL = "https://xn--maanarica-m6a.com";
 
 const title = "Mañana Rica | Desayunos sorpresa en Morelia";
 const description =
@@ -63,6 +59,8 @@ const localBusiness = {
   priceRange: "$359 – $599 MXN",
   servesCuisine: "Desayunos",
   areaServed: { "@type": "City", name: "Morelia" },
+  // Perfiles oficiales: le confirman a Google que estas redes son del negocio
+  sameAs: Object.values(SOCIAL_LINKS).filter(Boolean),
   address: {
     "@type": "PostalAddress",
     addressLocality: "Morelia",
