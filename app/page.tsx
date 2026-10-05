@@ -108,7 +108,7 @@ const packages: Package[] = [
     id: 4,
     name: "Apapacho",
     occasion: "La gran sorpresa",
-    price: 559, // ⚠️ El flyer dice $599: confirma cuál es el correcto
+    price: 599, //
     image: "/img/apapacho-900.webp",
     description: "Desayuno, pastel y recuerdos en una sola charola.",
     includes: [
