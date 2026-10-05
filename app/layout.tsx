@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+// Fuentes: se importan aquí (y no en globals.css) para que el build copie los archivos .woff2
+import "@fontsource-variable/fraunces/opsz.css";
+import "@fontsource-variable/fraunces/opsz-italic.css";
+import "@fontsource-variable/nunito-sans/index.css";
 import "./globals.css";
 import { SITE_URL, SOCIAL_LINKS } from "./site";
 import { themeInitScript } from "./theme/seasons";
