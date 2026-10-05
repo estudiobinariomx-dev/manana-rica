@@ -65,7 +65,7 @@ type SeasonText = {
 /** Textos que cambian según la temporada */
 export const seasonContent: Record<Season, SeasonText> = {
     normal: {
-        eyebrow: "Entregas en Morelia",
+        eyebrow: "Desayunos sorpresa en Morelia",
         badge: ["Ingredientes", "frescos y saludables."],
         marquee: ["Ingredientes frescos", "Personalizable", "Entrega local", "Hecho en Morelia"],
     },
