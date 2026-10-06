@@ -53,7 +53,7 @@ const packages: Package[] = [
       "🧇 2 mini waffles",
       "🍯 Miel maple o mermelada",
       "🍓 Fruta fresca de temporada",
-      "🍊 Jugo individual de naranja",
+      "🍊 Jugo de naranja",
       "💌 Tarjeta personalizada de ocasión",
       "🎏 Banderín básico",
       "🍴 Cubiertos",
@@ -74,7 +74,7 @@ const packages: Package[] = [
       "🥣 Yogurt con fruta y granola",
       "🍪 2 galletas integrales",
       "🍊 Jugo de naranja",
-      "☕ Café frío o leche de sabor",
+      "📷 Foto tipo polaroid",
       "💌 Tarjeta personalizada de ocasión",
       "🎏 Banderín básico",
       "🍴 Cubiertos",
@@ -95,10 +95,10 @@ const packages: Package[] = [
       "🍯 Miel maple o mermelada",
       "🥣 Yogurt con fruta y granola",
       "🍪 3 galletas integrales",
-      "🍊 Jugo de naranja grande",
+      "🍊 Jugo de naranja",
       "☕ Café frío o leche de sabor",
-      "💌 Tarjeta personalizada de ocasión",
       "📷 Foto tipo polaroid",
+      "💌 Tarjeta personalizada de ocasión",
       "🎏 Banderín básico",
       "🍴 Cubiertos",
     ],
@@ -112,18 +112,18 @@ const packages: Package[] = [
     image: "/img/apapacho-900.webp",
     description: "Desayuno, pastel y recuerdos en una sola charola.",
     includes: [
-      "🥐 Croissant especial de pollo y queso",
+      "🥐 Croissant de jamón y queso",
       "🧇 3 mini waffles",
       "🍓 Fruta para acompañar los waffles",
       "🍯 Miel maple o mermelada",
       "🥣 Yogurt con fruta y granola",
       "🍪 3 galletas integrales",
-      "🍊 Jugo de naranja grande",
-      "🍫 Muffin de chocolate o mini pastel",
+      "🍊 Jugo de naranja",
+      "🍫 Muffin de chocolate",
       "☕ Café frío o leche de sabor",
       "📷 3 fotos tipo polaroid",
       "💌 Tarjeta personalizada de ocasión",
-      "🎏 Banderín personalizado",
+      "🎏 Banderín especial de fotografías",
       "🍴 Cubiertos",
     ],
     badge: "Especial",
@@ -132,10 +132,10 @@ const packages: Package[] = [
 
 const extras: Extra[] = [
   { id: "photos", name: "Tira de 4 fotos", price: 49, icon: "▣" },
-  { id: "cake-slice", name: "Rebanada de pastel", price: 69, icon: "◢", group: "cake" },
-  { id: "mini-cake", name: "Mini pastel para 1–2 personas", price: 160, icon: "⌒", group: "cake" },
-  { id: "sunflower", name: "Un girasol", price: 69, icon: "✹", group: "flowers" },
-  { id: "gerberas", name: "Mini ramo de 2–3 gerberas", price: 69, icon: "✿", group: "flowers" },
+  { id: "cake-slice", name: "Rebanada de pastel", price: 99, icon: "◢", group: "cake" },
+  { id: "mini-cake", name: "Mini pastel para 1–2 personas", price: 299, icon: "⌒", group: "cake" },
+  { id: "sunflower", name: "Mini ramo de un girasol", price: 99, icon: "✹", group: "flowers" },
+  { id: "gerberas", name: "Mini ramo de 2 gerberas", price: 149, icon: "✿", group: "flowers" },
 ];
 
 // Número de WhatsApp con código de país, sin espacios ni signos. Ej. 521234567890.
@@ -1329,8 +1329,8 @@ export default function Home() {
         tabIndex={showBackToTop && !drawerOpen ? 0 : -1}
         aria-hidden={!showBackToTop || drawerOpen}
         className={`fixed z-40 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-brand text-on-brand shadow-[0_10px_25px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover md:h-12 md:w-12 ${showFloatingButton
-            ? "bottom-[84px] right-[22px] md:bottom-[138px] md:right-[54px]"
-            : "bottom-5 right-5 md:bottom-8 md:right-8"
+          ? "bottom-[84px] right-[22px] md:bottom-[138px] md:right-[54px]"
+          : "bottom-5 right-5 md:bottom-8 md:right-8"
           } ${showBackToTop && !drawerOpen ? "opacity-100" : "pointer-events-none translate-y-3 opacity-0"}`}
       >
         <ArrowUpIcon />
