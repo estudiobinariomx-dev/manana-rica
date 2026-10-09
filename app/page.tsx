@@ -145,7 +145,7 @@ const whatsappNumber = "523334583049";
 // Textos que se repiten en varias partes de la página.
 // ⚠️ Revisa que coincidan con tus reglas reales (la regla 01 dice 48 h).
 const ADVANCE_NOTICE = "24 h";
-const BUSINESS_HOURS = "Lunes a sábado · 8:00–18:00";
+const BUSINESS_HOURS = "Lunes a domingo · 8:00–19:00";
 
 const navLinks = [
   { href: "#paquetes", label: "PAQUETES" },
@@ -312,6 +312,27 @@ const whatsappLink = (text: string) =>
 
 const scrollToPackages = () =>
   document.getElementById("paquetes")?.scrollIntoView({ behavior: "smooth" });
+
+
+// Teléfono: deja solo números, quita la lada +52 / +521 si la pegan
+// y lo agrupa como 443 123 4567 (o 33 3458 3049 en ladas de dos dígitos).
+const TWO_DIGIT_AREA_CODES = ["55", "33", "81"];
+
+const formatPhone = (value: string) => {
+  let digits = value.replace(/\D/g, "");
+  if (digits.length > 10 && digits.startsWith("521")) digits = digits.slice(3);
+  else if (digits.length > 10 && digits.startsWith("52")) digits = digits.slice(2);
+  digits = digits.slice(0, 10);
+
+  const parts = TWO_DIGIT_AREA_CODES.includes(digits.slice(0, 2))
+    ? [digits.slice(0, 2), digits.slice(2, 6), digits.slice(6)]
+    : [digits.slice(0, 3), digits.slice(3, 6), digits.slice(6)];
+
+  return parts.filter(Boolean).join(" ");
+};
+
+// Acepta exactamente 10 dígitos con el formato de arriba
+const PHONE_PATTERN = "\\d{3} \\d{3} \\d{4}|\\d{2} \\d{4} \\d{4}";
 
 /* ------------------------------------------------------------------ */
 /* Íconos                                                              */
@@ -531,47 +552,54 @@ export default function Home() {
       ? "Contactar primero a quien solicita"
       : "Pueden llamar a quien recibe";
 
+  const SEPARATOR = "━━━━━━━━━━━━━━━";
+
+  // Mensaje para WhatsApp: *texto* = negritas, _texto_ = cursiva, "> " = cita
   const whatsappMessage = [
-    "*NUEVA SOLICITUD - MAÑANA RICA*",
-    "",
+    "🌅 *NUEVA SOLICITUD · MAÑANA RICA*",
     "Hola, quiero solicitar un desayuno sorpresa.",
     "",
-    "*DETALLES DEL DESAYUNO*",
-    `*Paquete:* ${selected.name}`,
-    `*Ocasión:* ${occasion}`,
-    `*Temática:* ${selectedTheme || "Sin temática especial"}`,
+    SEPARATOR,
+    "🧺 *DESAYUNO*",
+    `Paquete: *${selected.name}* — *${money(selected.price)}*`,
+    `Ocasión: ${occasion}`,
+    `Temática: ${selectedTheme || "Sin temática especial"}`,
     "",
-    "*EXTRAS*",
-    chosenExtras.map((extra) => `- ${extra.name} (+${money(extra.price)})`).join("\n") ||
-    "- Sin extras",
+    "➕ *EXTRAS*",
+    ...(chosenExtras.length
+      ? chosenExtras.map((extra) => `• ${extra.name} — *${money(extra.price)}*`)
+      : ["• Sin extras"]),
     "",
-    "*DATOS DE ENTREGA*",
-    `*Fecha:* ${formattedDate}`,
-    `*Horario:* ${schedule}`,
-    `*Zona:* ${deliverySummary}`,
-    `*Dirección:* ${address || "Por definir"}`,
-    "*Envío:* Por cotizar",
-    `*Manejo de la sorpresa:* ${surpriseSummary}`,
+    SEPARATOR,
+    "📍 *ENTREGA*",
+    `Fecha: *${formattedDate}*`,
+    `Horario: *${schedule}*`,
+    `Zona: ${deliverySummary}`,
+    `Dirección: ${address || "Por definir"}`,
+    `Sorpresa: ${surpriseSummary}`,
     "",
-    "*DATOS DEL PEDIDO*",
-    `*Recibe:* ${recipient || "Por definir"}`,
-    `*Teléfono de quien recibe:* ${recipientPhone || "Por definir"}`,
-    `*Solicita:* ${sender || "Por definir"}`,
-    `*Teléfono de quien solicita:* ${phone || "Por definir"}`,
+    "👤 *CONTACTO*",
+    `Recibe: *${recipient || "Por definir"}* · ${recipientPhone || "Sin teléfono"}`,
+    `Solicita: *${sender || "Por definir"}* · ${phone || "Sin teléfono"}`,
     "",
-    "*MENSAJE PARA LA TARJETA*",
-    `_${message || "Sin mensaje personalizado"}_`,
+    "💌 *MENSAJE PARA LA TARJETA*",
+    `> ${message || "Sin mensaje personalizado"}`,
     "",
-    "*ALERGIAS O INDICACIONES*",
+    "⚠️ *ALERGIAS O INDICACIONES*",
     notes || "Ninguna",
     "",
-    "*RESUMEN DE PAGO*",
-    `*Subtotal sin envío:* ${money(total)}`,
-    "*Total final:* Se confirma al cotizar el envío",
-    "Esta solicitud todavía no está confirmada.",
-    "El pedido se confirma después de revisar disponibilidad y recibir el *50% de anticipo*.",
+    SEPARATOR,
+    "💰 *RESUMEN*",
+    `Paquete: ${money(selected.price)}`,
+    `Extras: ${money(extrasTotal)}`,
+    `*Subtotal: ${money(total)}*`,
+    "Envío: _por cotizar_",
+    `Anticipo (50% del subtotal): *${money(Math.ceil(total / 2))}*`,
+    SEPARATOR,
     "",
-    "Quedo pendiente de su confirmación. Gracias.",
+    "_Esta solicitud todavía no está confirmada. Se confirma al revisar disponibilidad y recibir el anticipo._",
+    "",
+    "Quedo pendiente. ¡Gracias!",
   ].join("\n");
 
   const whatsappInfoUrl = whatsappLink(
@@ -1609,12 +1637,14 @@ export default function Home() {
                       <input
                         required
                         type="tel"
-                        autoComplete="tel"
-                        pattern="[0-9 +()-]{10,}"
-                        title="Escribe un teléfono de al menos 10 dígitos"
+                        inputMode="numeric"
+                        autoComplete="tel-national"
+                        maxLength={12}
+                        pattern={PHONE_PATTERN}
+                        title="Escribe los 10 dígitos del teléfono"
                         value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
-                        placeholder="443 000 0000"
+                        onChange={(event) => setPhone(formatPhone(event.target.value))}
+                        placeholder="443 123 4567"
                       />
                     </label>
 
@@ -1623,11 +1653,14 @@ export default function Home() {
                       <input
                         required
                         type="tel"
-                        pattern="[0-9 +()-]{10,}"
-                        title="Escribe un teléfono de al menos 10 dígitos"
+                        inputMode="numeric"
+                        autoComplete="off"
+                        maxLength={12}
+                        pattern={PHONE_PATTERN}
+                        title="Escribe los 10 dígitos del teléfono"
                         value={recipientPhone}
-                        onChange={(event) => setRecipientPhone(event.target.value)}
-                        placeholder="443 000 0000"
+                        onChange={(event) => setRecipientPhone(formatPhone(event.target.value))}
+                        placeholder="443 123 4567"
                       />
                     </label>
 
