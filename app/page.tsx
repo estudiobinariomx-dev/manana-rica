@@ -981,7 +981,7 @@ export default function Home() {
               Cada paquete incluye presentación especial y una dedicatoria. Puedes cambiar alimentos y
               sumar extras durante tu pedido.
             </p>
-            {CATALOG_URL && (
+            {/* {CATALOG_URL && (
               <a
                 href={CATALOG_URL}
                 download={CATALOG_FILENAME}
@@ -990,7 +990,7 @@ export default function Home() {
                 <DownloadIcon />
                 Descargar catálogo (PDF)
               </a>
-            )}
+            )} */}
           </div>
         </div>
 
@@ -1472,7 +1472,7 @@ export default function Home() {
             </a>
           )}
 
-          {CATALOG_URL && (
+          {/* {CATALOG_URL && (
             <a
               href={CATALOG_URL}
               download={CATALOG_FILENAME}
@@ -1481,7 +1481,7 @@ export default function Home() {
               <DownloadIcon />
               Descargar catálogo (PDF)
             </a>
-          )}
+          )} */}
 
           {socialNetworks.length > 0 && (
             <div className="flex flex-col items-center gap-3">
