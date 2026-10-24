@@ -15,6 +15,9 @@ import { ModeToggle, SeasonFloaters, SeasonGarland, useSeason } from "./theme/th
 /* Tipos                                                               */
 /* ------------------------------------------------------------------ */
 
+// Nombres de las temporadas (halloween, muertos, navidad…), tomados de theme/seasons
+type Season = keyof typeof seasonContent;
+
 type Package = {
   id: number;
   name: string;
@@ -24,6 +27,14 @@ type Package = {
   description: string;
   includes: string[];
   badge?: string;
+  // Si lo pones, el paquete solo aparece en esas temporadas
+  seasons?: Season[];
+  // Opción que el cliente elige en el paso 1 (ej. chilaquiles rojos o verdes)
+  choice?: {
+    label: string; // pregunta que ve el cliente
+    summary: string; // cómo aparece en el resumen y en WhatsApp
+    options: string[];
+  };
 };
 
 type Extra = {
@@ -31,7 +42,7 @@ type Extra = {
   name: string;
   price: number;
   icon: string;
-  group?: "cake" | "flowers";
+  group?: "cake" | "flowers" | "balloons";
 };
 
 type DeliveryZone = "" | "centro" | "extendida";
@@ -68,10 +79,10 @@ const packages: Package[] = [
     image: "/img/buenos_dias-900.webp",
     description: "Todo lo necesario para empezar sonriendo.",
     includes: [
-      "🥐 Croissant de jamón y queso",
+      "🥐 Cuernito de jamón y queso",
       "🧇 2 mini waffles",
       "🍯 Miel maple o mermelada",
-      "🥣 Yogurt con fruta y granola",
+      "🥣 Fruta con yogurt y granola",
       "🍪 2 galletas integrales",
       "🍊 Jugo de naranja",
       "📷 Foto tipo polaroid",
@@ -85,15 +96,15 @@ const packages: Package[] = [
     id: 3,
     name: "Pensé en ti",
     occasion: "Para celebrar",
-    price: 489,
+    price: 499,
     image: "/img/pense_en_ti-900.webp",
-    description: "Una sorpresa hecha especialmente para esa persona.",
+    description: "Hecho especialmente para esa persona.",
     includes: [
-      "🥐 Croissant de jamón y queso",
+      "🥐 Cuernito de jamón y queso",
       "🧇 3 mini waffles",
       "🍓 Fruta para acompañar los waffles",
       "🍯 Miel maple o mermelada",
-      "🥣 Yogurt con fruta y granola",
+      "🥣 Fruta con yogurt y granola",
       "🍪 3 galletas integrales",
       "🍊 Jugo de naranja",
       "☕ Café frío o leche de sabor",
@@ -108,15 +119,15 @@ const packages: Package[] = [
     id: 4,
     name: "Apapacho",
     occasion: "La gran sorpresa",
-    price: 599, //
+    price: 599,
     image: "/img/apapacho-900.webp",
-    description: "Desayuno, pastel y recuerdos en una sola charola.",
+    description: "Desayuno y recuerdos en una sola charola.",
     includes: [
-      "🥐 Croissant de jamón y queso",
+      "🥐 Cuernito de jamón y queso",
       "🧇 3 mini waffles",
       "🍓 Fruta para acompañar los waffles",
       "🍯 Miel maple o mermelada",
-      "🥣 Yogurt con fruta y granola",
+      "🥣 Fruta con yogurt y granola",
       "🍪 3 galletas integrales",
       "🍊 Jugo de naranja",
       "🍫 Muffin de chocolate",
@@ -124,23 +135,135 @@ const packages: Package[] = [
       "📷 3 fotos tipo polaroid",
       "💌 Tarjeta personalizada de ocasión",
       "🎏 Banderín especial de fotografías",
+      "🎏 Banderín básico",
       "🍴 Cubiertos",
     ],
     badge: "Especial",
+  },
+  {
+    id: 5,
+    name: "Despertar bonito",
+    occasion: "Sabor mexicano",
+    price: 599,
+    image: "/img/despertar_bonito-900.webp",
+    description: "Chilaquiles calientitos para empezar el día con todo.",
+    includes: [
+      "🌶️ Chilaquiles rojos o verdes con queso, crema, cebolla y cilantro",
+      "🧇 2 mini waffles",
+      "🍯 Miel maple o mermelada",
+      "🥣 Fruta con yogurt y granola",
+      "🍪 2 galletas integrales",
+      "🍊 Jugo de naranja",
+      "💌 Tarjeta personalizada de ocasión",
+      "🎏 Banderín especial de fotografías",
+      "🍴 Cubiertos",
+    ],
+    badge: "Nuevo",
+    choice: {
+      label: "¿Cómo quieres los chilaquiles?",
+      summary: "Chilaquiles",
+      options: ["Rojos", "Verdes"],
+    },
+  },
+  {
+    id: 6,
+    name: "Dulces recuerdos",
+    occasion: "Temporada de muertos",
+    price: 659,
+    image: "/img/dulces_recuerdos-900.webp",
+    description: "Pan de muerto y chocolate caliente para recordar con cariño.",
+    includes: [
+      "🥐 Cuernito de jamón y queso",
+      "🍞 Pan de muerto artesanal",
+      "🍫 Chocolate mexicano en polvo",
+      "🥛 Leche (250 ml) para preparar el chocolate",
+      "🧇 3 mini waffles",
+      "🍯 Miel maple o mermelada",
+      "🥣 Fruta con yogurt y granola",
+      "🍪 3 galletas integrales",
+      "🍊 Jugo de naranja",
+      "📷 Foto tipo polaroid",
+      "💌 Tarjeta personalizada de ocasión",
+      "🎏 Banderín básico",
+      "🍴 Cubiertos",
+    ],
+    badge: "Temporada",
+    // ⚠️ Revisa que estos nombres coincidan con las claves de app/theme/seasons.ts
+    seasons: ["halloween", "muertos"],
+  },
+  {
+    id: 7,
+    name: "Jazmín",
+    occasion: "Con flores",
+    price: 869,
+    image: "/img/jazmin-900.webp",
+    description: "Un buenos días completo, con un ramo que se queda.",
+    includes: [
+      "💐 Ramo mediano de gerberas o rosas",
+      "🥐 Cuernito de jamón y queso",
+      "🧇 2 mini waffles",
+      "🍯 Miel maple o mermelada",
+      "🥣 Fruta con yogurt y granola",
+      "🍪 2 galletas integrales",
+      "🍊 Jugo de naranja",
+      "📷 Foto tipo polaroid",
+      "💌 Tarjeta personalizada de ocasión",
+      "🎏 Banderín básico",
+      "🍴 Cubiertos",
+    ],
+    badge: "Con flores",
+    choice: {
+      label: "¿Qué flores prefieres para el ramo?",
+      summary: "Flores del ramo",
+      options: ["Gerberas", "Rosas"],
+    },
+  },
+  {
+    id: 8,
+    name: "Mañana Rica",
+    occasion: "La experiencia completa",
+    price: 1549,
+    image: "/img/manana_rica-900.webp",
+    description: "Desayuno, flores y pastel: todo en una sola sorpresa.",
+    includes: [
+      "💐 Ramo de 10 gerberas y 10 rosas",
+      "🎂 Mini pastel gourmet para 1–2 personas",
+      "🥐 Cuernito de jamón y queso",
+      "🧇 3 mini waffles",
+      "🍓 Fruta para acompañar los waffles",
+      "🍯 Miel maple o mermelada",
+      "🥣 Fruta con yogurt y granola",
+      "🍪 3 galletas integrales",
+      "🍊 Jugo de naranja",
+      "☕ Café frío o leche de sabor",
+      "📷 Foto tipo polaroid",
+      "💌 Tarjeta personalizada de ocasión",
+      "🎏 Banderín básico",
+      "🍴 Cubiertos",
+    ],
+    badge: "Premium",
   },
 ];
 
 const extras: Extra[] = [
   { id: "photos", name: "Tira de 4 fotos", price: 49, icon: "▣" },
-  { id: "cake-slice", name: "Rebanada de pastel", price: 99, icon: "◢", group: "cake" },
-  { id: "mini-cake", name: "Mini pastel para 1–2 personas", price: 299, icon: "⌒", group: "cake" },
+  { id: "cake-slice", name: "Rebanada de pastel gourmet", price: 99, icon: "◢", group: "cake" },
+  { id: "mini-cake", name: "Mini pastel para 1–2 personas gourmet", price: 299, icon: "⌒", group: "cake" },
   { id: "sunflower", name: "Mini ramo de un girasol", price: 99, icon: "✹", group: "flowers" },
   { id: "gerberas", name: "Mini ramo de 2 gerberas", price: 149, icon: "✿", group: "flowers" },
+  { id: "foil-balloon", name: "Globo metálico", price: 99, icon: "◯", group: "balloons" },
+  { id: "bubble-balloon", name: "Globo burbuja", price: 179, icon: "◎", group: "balloons" },
 ];
 
 // Número de WhatsApp con código de país, sin espacios ni signos. Ej. 521234567890.
 // Si lo dejas vacío, los botones de WhatsApp se ocultan.
 const whatsappNumber = "523334583049";
+
+// Catálogo descargable: el archivo va en public/.
+// Si lo dejas vacío (""), los botones de descarga se ocultan.
+const CATALOG_URL = "/catalogo-manana-rica.pdf";
+// Nombre con el que se guarda el archivo en el dispositivo del cliente
+const CATALOG_FILENAME = "Catálogo Mañana Rica.pdf";
 
 // Textos que se repiten en varias partes de la página.
 // ⚠️ Revisa que coincidan con tus reglas reales (la regla 01 dice 48 h).
@@ -403,6 +526,15 @@ function BagIcon() {
   );
 }
 
+function DownloadIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 4v11M7 10l5 5 5-5" />
+      <path d="M5 19h14" />
+    </svg>
+  );
+}
+
 function CheckIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
@@ -424,6 +556,8 @@ export default function Home() {
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
   const [selectedTheme, setSelectedTheme] = useState("");
   const [occasion, setOccasion] = useState("Cumpleaños");
+  // Opción del paquete (ej. "Verdes" o "Rosas"); vacía si el paquete no tiene
+  const [packageChoice, setPackageChoice] = useState("");
 
   // Datos del pedido
   const [recipient, setRecipient] = useState("");
@@ -449,6 +583,12 @@ export default function Home() {
   const season = useSeason();
   const seasonText = seasonContent[season];
   const marqueeItems = seasonText.marquee;
+
+  // Paquetes sin "seasons" siempre se ven; los de temporada solo en sus fechas
+  const visiblePackages = useMemo(
+    () => packages.filter((pkg) => !pkg.seasons || pkg.seasons.includes(season)),
+    [season],
+  );
 
   // En temporadas como Día de las Madres, su ocasión aparece primero en el carrusel
   const orderedOccasions = useMemo(() => {
@@ -562,6 +702,8 @@ export default function Home() {
     SEPARATOR,
     "🧺 *DESAYUNO*",
     `Paquete: *${selected.name}* — *${money(selected.price)}*`,
+    // Solo aparece si el paquete tiene una opción (chilaquiles, flores…)
+    ...(selected.choice ? [`${selected.choice.summary}: *${packageChoice}*`] : []),
     `Ocasión: ${occasion}`,
     `Temática: ${selectedTheme || "Sin temática especial"}`,
     "",
@@ -631,6 +773,8 @@ export default function Home() {
   // vacía si se abre desde un paquete, o la de la ocasión elegida.
   const openBuilder = (pkg: Package, theme = "") => {
     setSelected(pkg);
+    // Marca la primera opción del paquete (o nada si no tiene)
+    setPackageChoice(pkg.choice?.options[0] ?? "");
     setSelectedTheme(theme);
     setSelectedExtras([]);
     setDeliveryZone("");
@@ -640,7 +784,7 @@ export default function Home() {
     setDrawerOpen(true);
   };
 
-  // Los extras del mismo grupo (pastel, flores) se excluyen entre sí
+  // Los extras del mismo grupo (pastel, flores, globos) se excluyen entre sí
   const toggleExtra = (id: string) => {
     const group = extras.find((extra) => extra.id === id)?.group;
 
@@ -783,7 +927,7 @@ export default function Home() {
               height={1448}
               fetchPriority="high"
               decoding="async"
-              alt="Desayuno sorpresa a domicilio en Morelia con croissant, fruta fresca, waffles y jugo de naranja"
+              alt="Desayuno sorpresa a domicilio en Morelia con Cuernito, fruta fresca, waffles y jugo de naranja"
               className="hero-image-motion h-full w-full object-cover"
             />
           </div>
@@ -832,14 +976,26 @@ export default function Home() {
               <em>Nosotros ponemos la magia.</em>
             </h2>
           </div>
-          <p className="max-w-sm text-sm leading-6 text-muted">
-            Cada paquete incluye presentación especial y una dedicatoria. Puedes cambiar alimentos y
-            sumar extras durante tu pedido.
-          </p>
+          <div className="max-w-sm">
+            <p className="text-sm leading-6 text-muted">
+              Cada paquete incluye presentación especial y una dedicatoria. Puedes cambiar alimentos y
+              sumar extras durante tu pedido.
+            </p>
+            {CATALOG_URL && (
+              <a
+                href={CATALOG_URL}
+                download={CATALOG_FILENAME}
+                className="mt-4 inline-flex items-center gap-2 border border-brand-ink px-4 py-2.5 text-xs font-bold text-brand-ink transition duration-300 hover:bg-brand hover:text-white"
+              >
+                <DownloadIcon />
+                Descargar catálogo (PDF)
+              </a>
+            )}
+          </div>
         </div>
 
         <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {packages.map((pkg) => {
+          {visiblePackages.map((pkg) => {
             const revealed = revealedPackage === pkg.id;
 
             return (
@@ -911,9 +1067,14 @@ export default function Home() {
                         {pkg.name}
                       </h3>
                     </div>
-                    <p className="whitespace-nowrap font-serif text-xl text-brand-ink">
-                      {money(pkg.price)}
-                    </p>
+                    <div className="shrink-0 text-right">
+                      <p className="whitespace-nowrap font-serif text-xl text-brand-ink">
+                        {money(pkg.price)}
+                      </p>
+                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
+                        + envío
+                      </p>
+                    </div>
                   </div>
 
                   <p className="mt-3 text-sm leading-6 text-muted">{pkg.description}</p>
@@ -1075,7 +1236,7 @@ export default function Home() {
               {[
                 ["🍓", "Fruta fresca", "Lavada y desinfectada."],
                 ["🥣", "Yogurt griego", "Con fruta y granola."],
-                ["🥪", "Jamón de pavo", "En nuestros sándwiches y croissants."],
+                ["🥪", "Jamón de pavo", "En nuestros sándwiches y cuernitos."],
                 ["🌾", "Opciones integrales", "En productos seleccionados."],
               ].map(([icon, title, text]) => (
                 <div key={title} className="border-t border-white/20 pt-4">
@@ -1311,6 +1472,17 @@ export default function Home() {
             </a>
           )}
 
+          {CATALOG_URL && (
+            <a
+              href={CATALOG_URL}
+              download={CATALOG_FILENAME}
+              className="-mt-4 flex items-center gap-2 text-sm font-semibold text-footer-ink transition hover:text-gold"
+            >
+              <DownloadIcon />
+              Descargar catálogo (PDF)
+            </a>
+          )}
+
           {socialNetworks.length > 0 && (
             <div className="flex flex-col items-center gap-3">
               <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-footer-muted">
@@ -1447,7 +1619,7 @@ export default function Home() {
             </div>
 
             <div className="px-5 py-7 md:px-9 md:py-9">
-              {/* ---------- Paso 1: extras y ocasión ---------- */}
+              {/* ---------- Paso 1: opción del paquete, extras y ocasión ---------- */}
               {step === 1 && (
                 <div>
                   <p className="step-label">Paso 1 · Personaliza</p>
@@ -1463,6 +1635,36 @@ export default function Home() {
                       </div>
                       <span className="text-2xl" aria-hidden="true">♥</span>
                     </div>
+                  )}
+
+                  {/* Opción del paquete (chilaquiles rojos/verdes, gerberas/rosas…) */}
+                  {selected.choice && (
+                    <fieldset className="mt-7">
+                      <legend className="text-xs font-bold uppercase tracking-[.13em] text-muted">
+                        {selected.choice.label}
+                      </legend>
+
+                      <div className="mt-4 grid grid-cols-2 gap-2">
+                        {selected.choice.options.map((option) => {
+                          const isSelected = packageChoice === option;
+
+                          return (
+                            <button
+                              key={option}
+                              type="button"
+                              onClick={() => setPackageChoice(option)}
+                              aria-pressed={isSelected}
+                              className={`border px-4 py-3 text-sm font-semibold transition duration-300 ${isSelected
+                                ? "border-brand-ink bg-brand text-white shadow-md"
+                                : "border-line bg-surface text-heading hover:border-edge/50"
+                                }`}
+                            >
+                              {option}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </fieldset>
                   )}
 
                   <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -1720,6 +1922,11 @@ export default function Home() {
                       <p className="mt-1 text-xs text-muted">
                         {occasion} · {recipient || "Destinatario"}
                       </p>
+                      {selected.choice && (
+                        <p className="mt-1 text-xs text-muted">
+                          {selected.choice.summary}: {packageChoice}
+                        </p>
+                      )}
                       <p className="mt-3 text-sm font-bold">{money(selected.price)}</p>
                     </div>
                   </div>

@@ -60,7 +60,8 @@ const localBusiness = {
   image: `${SITE_URL}/og.jpg`,
   logo: `${SITE_URL}/icon.png`,
   telephone: "+52 33 3458 3049",
-  priceRange: "$359 – $599 MXN",
+  // Del paquete más barato al más caro; actualízalo si cambias precios en page.tsx
+  priceRange: "$359 – $1,024 MXN",
   servesCuisine: "Desayunos",
   areaServed: { "@type": "City", name: "Morelia" },
   // Perfiles oficiales: le confirman a Google que estas redes son del negocio
