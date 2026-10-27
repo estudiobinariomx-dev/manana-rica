@@ -56,7 +56,7 @@ const packages: Package[] = [
     id: 1,
     name: "Rayito de Sol",
     occasion: "Un lindo detalle",
-    price: 359,
+    price: 419,
     image: "/img/rayito_de_sol-900.webp",
     description: "Pequeño en precio, grande en intención.",
     includes: [
@@ -75,7 +75,7 @@ const packages: Package[] = [
     id: 2,
     name: "Buenos días",
     occasion: "El más completo",
-    price: 419,
+    price: 469,
     image: "/img/buenos_dias-900.webp",
     description: "Todo lo necesario para empezar sonriendo.",
     includes: [
@@ -96,7 +96,7 @@ const packages: Package[] = [
     id: 3,
     name: "Pensé en ti",
     occasion: "Para celebrar",
-    price: 499,
+    price: 549,
     image: "/img/pense_en_ti-900.webp",
     description: "Hecho especialmente para esa persona.",
     includes: [
@@ -119,7 +119,7 @@ const packages: Package[] = [
     id: 4,
     name: "Apapacho",
     occasion: "La gran sorpresa",
-    price: 599,
+    price: 619,
     image: "/img/apapacho-900.webp",
     description: "Desayuno y recuerdos en una sola charola.",
     includes: [
@@ -144,7 +144,7 @@ const packages: Package[] = [
     id: 5,
     name: "Despertar bonito",
     occasion: "Sabor mexicano",
-    price: 599,
+    price: 629,
     image: "/img/despertar_bonito-900.webp",
     description: "Chilaquiles calientitos para empezar el día con todo.",
     includes: [
@@ -195,7 +195,7 @@ const packages: Package[] = [
     id: 7,
     name: "Jazmín",
     occasion: "Con flores",
-    price: 869,
+    price: 899,
     image: "/img/jazmin-900.webp",
     description: "Un buenos días completo, con un ramo que se queda.",
     includes: [
@@ -222,7 +222,7 @@ const packages: Package[] = [
     id: 8,
     name: "Mañana Rica",
     occasion: "La experiencia completa",
-    price: 1549,
+    price: 1649,
     image: "/img/manana_rica-900.webp",
     description: "Desayuno, flores y pastel: todo en una sola sorpresa.",
     includes: [
@@ -248,7 +248,7 @@ const packages: Package[] = [
 const extras: Extra[] = [
   { id: "photos", name: "Tira de 4 fotos", price: 49, icon: "▣" },
   { id: "cake-slice", name: "Rebanada de pastel gourmet", price: 99, icon: "◢", group: "cake" },
-  { id: "mini-cake", name: "Mini pastel para 1–2 personas gourmet", price: 299, icon: "⌒", group: "cake" },
+  { id: "mini-cake", name: "Mini pastel para 1–2 personas gourmet", price: 249, icon: "⌒", group: "cake" },
   { id: "sunflower", name: "Mini ramo de un girasol", price: 99, icon: "✹", group: "flowers" },
   { id: "gerberas", name: "Mini ramo de 2 gerberas", price: 149, icon: "✿", group: "flowers" },
   { id: "foil-balloon", name: "Globo metálico", price: 99, icon: "◯", group: "balloons" },
@@ -981,7 +981,7 @@ export default function Home() {
               Cada paquete incluye presentación especial y una dedicatoria. Puedes cambiar alimentos y
               sumar extras durante tu pedido.
             </p>
-            {/* {CATALOG_URL && (
+            {CATALOG_URL && (
               <a
                 href={CATALOG_URL}
                 download={CATALOG_FILENAME}
@@ -990,7 +990,7 @@ export default function Home() {
                 <DownloadIcon />
                 Descargar catálogo (PDF)
               </a>
-            )} */}
+            )}
           </div>
         </div>
 
@@ -1472,7 +1472,7 @@ export default function Home() {
             </a>
           )}
 
-          {/* {CATALOG_URL && (
+          {CATALOG_URL && (
             <a
               href={CATALOG_URL}
               download={CATALOG_FILENAME}
@@ -1481,7 +1481,7 @@ export default function Home() {
               <DownloadIcon />
               Descargar catálogo (PDF)
             </a>
-          )} */}
+          )}
 
           {socialNetworks.length > 0 && (
             <div className="flex flex-col items-center gap-3">
