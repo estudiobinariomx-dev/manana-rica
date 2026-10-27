@@ -69,7 +69,7 @@ const packages: Package[] = [
       "🎏 Banderín básico",
       "🍴 Cubiertos",
     ],
-    badge: "Desde $359",
+    badge: "Desde $419",
   },
   {
     id: 2,
