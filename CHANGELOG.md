@@ -15,6 +15,11 @@ Fotos y precios nuevos van como PARCHE, salvo que agreguen un paquete nuevo (MEN
 
 <!-- Anota aquí los cambios mientras trabajas; al publicar, renombra esta sección con la versión y la fecha. -->
 
+## [1.0.1] - 2026-11-05
+
+### Cambiado
+- Catálogo PDF actualizado.
+
 ## [1.0.0] - 2026-11-04
 
 Primera versión oficial del sitio en producción.
@@ -55,5 +60,6 @@ Resumen del trabajo previo, tomado del historial de Git.
 ### Agosto 2026
 - Primera versión de la página.
 
-[Sin publicar]: https://github.com/estudiobinariomx-dev/manana-rica/compare/v1.0.0...HEAD
+[Sin publicar]: https://github.com/estudiobinariomx-dev/manana-rica/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/estudiobinariomx-dev/manana-rica/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/estudiobinariomx-dev/manana-rica/releases/tag/v1.0.0
