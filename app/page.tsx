@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { version } from "../package.json"; // Vite solo incluye este valor, no todo el archivo
 import { SOCIAL_LINKS } from "./site";
 import { seasonContent } from "./theme/seasons";
 import { ModeToggle, SeasonFloaters, SeasonGarland, useSeason } from "./theme/theme-client";
@@ -428,9 +429,11 @@ const todayInMorelia = () =>
     day: "2-digit",
   }).format(new Date());
 
+// Se usa api.whatsapp.com y no wa.me: al redirigir, wa.me rompe los emojis
+// y llegan como "�" (sobre todo en WhatsApp Web y de escritorio).
 const whatsappLink = (text: string) =>
   whatsappNumber
-    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`
+    ? `https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=${encodeURIComponent(text)}`
     : null;
 
 const scrollToPackages = () =>
@@ -456,6 +459,19 @@ const formatPhone = (value: string) => {
 
 // Acepta exactamente 10 dígitos con el formato de arriba
 const PHONE_PATTERN = "\\d{3} \\d{3} \\d{4}|\\d{2} \\d{4} \\d{4}";
+
+// Enlace de Google Maps (opcional). Acepta los formatos que da la app al compartir:
+// maps.app.goo.gl/…, goo.gl/maps/…, google.com/maps/… y maps.google.com/…
+const MAPS_PATTERN =
+  "https?://(maps\\.app\\.goo\\.gl/|goo\\.gl/maps/|(www\\.)?google\\.[a-z.]+/maps|maps\\.google\\.[a-z.]+).*";
+
+// Al compartir desde el celular a veces se copia "Nombre del lugar https://maps.app…".
+// Si lo pegado trae texto extra, se queda solo con el enlace.
+const extractMapsLink = (value: string) => {
+  const trimmed = value.trim();
+  if (!/\s/.test(trimmed)) return trimmed;
+  return trimmed.match(/https?:\/\/\S+/)?.[0] ?? value;
+};
 
 /* ------------------------------------------------------------------ */
 /* Íconos                                                              */
@@ -569,6 +585,7 @@ export default function Home() {
   const [deliveryZone, setDeliveryZone] = useState<DeliveryZone>("");
   const [deliveryPreference, setDeliveryPreference] = useState("surprise");
   const [address, setAddress] = useState("");
+  const [mapsLink, setMapsLink] = useState("");
   const [date, setDate] = useState("");
   const [schedule, setSchedule] = useState<string>(scheduleOptions[0]);
 
@@ -718,6 +735,8 @@ export default function Home() {
     `Horario: *${schedule}*`,
     `Zona: ${deliverySummary}`,
     `Dirección: ${address || "Por definir"}`,
+    // Solo aparece si pegaron el enlace de Google Maps
+    ...(mapsLink ? [`Ubicación en Maps: ${mapsLink}`] : []),
     `Sorpresa: ${surpriseSummary}`,
     "",
     "👤 *CONTACTO*",
@@ -1514,6 +1533,9 @@ export default function Home() {
             <a href="https://estudiobinariomx.com/" target="_blank" rel="noopener noreferrer">
               Estudio Binario Mx
             </a>
+            {/* Versión del sitio: se actualiza sola con `npm version` (ver CHANGELOG.md) */}
+            {" · "}
+            <span title="Versión del sitio">v{version}</span>
           </span>
           <span>Hecho con amor en Morelia, Mich.</span>
         </div>
@@ -1834,6 +1856,25 @@ export default function Home() {
                       />
                     </label>
 
+                    <label className="field sm:col-span-2">
+                      Ubicación en Google Maps <span>(opcional)</span>
+                      <input
+                        type="url"
+                        inputMode="url"
+                        autoComplete="off"
+                        pattern={MAPS_PATTERN}
+                        title="Pega el enlace que te da Google Maps al compartir la ubicación"
+                        value={mapsLink}
+                        onChange={(event) => setMapsLink(extractMapsLink(event.target.value))}
+                        placeholder="https://maps.app.goo.gl/…"
+                      />
+                      <span className="mt-2 block text-xs leading-5 tracking-normal">
+                        Nos ayuda a llegar justo al lugar. En Google Maps, mantén presionado el punto de
+                        entrega → <b className="font-bold">Compartir</b> →{" "}
+                        <b className="font-bold">Copiar enlace</b>, y pégalo aquí.
+                      </span>
+                    </label>
+
                     <label className="field">
                       Teléfono de quien solicita
                       <input
@@ -1959,6 +2000,16 @@ export default function Home() {
                     <div>
                       <p className="summary-label">Dirección</p>
                       <p className="mt-2 line-clamp-2">{address || "Por definir"}</p>
+                      {mapsLink && (
+                        <a
+                          href={mapsLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 inline-block text-accent underline underline-offset-2"
+                        >
+                          Ver en Google Maps
+                        </a>
+                      )}
                     </div>
                   </div>
 
