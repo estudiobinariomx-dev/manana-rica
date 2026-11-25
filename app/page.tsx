@@ -73,6 +73,24 @@ const packages: Package[] = [
   },
   {
     id: 2,
+    name: "Dulce encanto",
+    occasion: "",
+    price: 449,
+    // ⚠️ Foto temporal (es la de Despertar bonito). Sube dulce_encanto-900.webp y -480.webp
+    image: "/img/dulce_encanto-900.webp",
+    description: "Cuernito y muffin en una caja lista para sorprender.",
+    includes: [
+      "🥐 Cuernito de jamón y queso",
+      "🧁 Muffin",
+      "🍓 Fruta fresca de temporada",
+      "🍊 Jugo de naranja",
+      "💌 Tarjeta personalizada de ocasión",
+      "🍴 Cubiertos",
+    ],
+    badge: "Nuevo",
+  },
+  {
+    id: 3,
     name: "Buenos días",
     occasion: "El más completo",
     price: 469,
@@ -93,7 +111,7 @@ const packages: Package[] = [
     badge: "Más elegido",
   },
   {
-    id: 3,
+    id: 4,
     name: "Pensé en ti",
     occasion: "Para celebrar",
     price: 549,
@@ -116,7 +134,7 @@ const packages: Package[] = [
     badge: "Favorito",
   },
   {
-    id: 4,
+    id: 5,
     name: "Apapacho",
     occasion: "La gran sorpresa",
     price: 619,
@@ -141,7 +159,7 @@ const packages: Package[] = [
     badge: "Especial",
   },
   {
-    id: 5,
+    id: 6,
     name: "Despertar bonito",
     occasion: "Sabor mexicano",
     price: 629,
@@ -166,7 +184,7 @@ const packages: Package[] = [
     },
   },
   {
-    id: 6,
+    id: 7,
     name: "Dulces recuerdos",
     occasion: "Temporada de muertos",
     price: 659,
@@ -192,7 +210,32 @@ const packages: Package[] = [
     seasons: ["halloween", "muertos"],
   },
   {
-    id: 7,
+    id: 8,
+    name: "Mañana de chocolate",
+    occasion: "Temporada navideña",
+    price: 669,
+    // ⚠️ Foto temporal (es la de Dulces recuerdos). Sube manana_de_chocolate-900.webp y -480.webp
+    image: "/img/manana_de_chocolate-900.webp",
+    description: "Una bomba de chocolate para derretir y el sabor de la Navidad en la mañana.",
+    includes: [
+      "🥐 Cuernito de jamón y queso",
+      "🍫 Bomba de chocolate para derretir",
+      "🍪 Galleta de jengibre navideña",
+      "🥛 Leche (250 ml) para preparar el chocolate",
+      "🧇 2 mini waffles",
+      "🍯 Miel maple o mermelada",
+      "🥣 Fruta con yogurt y granola",
+      "🍊 Jugo de naranja",
+      "📷 Foto tipo polaroid",
+      "💌 Tarjeta personalizada de ocasión",
+      "🍴 Cubiertos",
+    ],
+    badge: "Temporada",
+    // ⚠️ Revisa que estos nombres coincidan con las claves de app/theme/seasons.ts
+    seasons: ["navidad", "normal"],
+  },
+  {
+    id: 9,
     name: "Jazmín",
     occasion: "Con flores",
     price: 899,
@@ -219,7 +262,7 @@ const packages: Package[] = [
     },
   },
   {
-    id: 8,
+    id: 10,
     name: "Mañana Rica",
     occasion: "La experiencia completa",
     price: 1649,
@@ -244,6 +287,10 @@ const packages: Package[] = [
     badge: "Premium",
   },
 ];
+
+// Paquete que se abre desde las tarjetas de "Ocasiones" (Pensé en ti).
+// Se busca por id para que no cambie si reordenas o agregas paquetes.
+const OCCASION_PACKAGE = packages.find((pkg) => pkg.id === 4) ?? packages[0]!;
 
 const extras: Extra[] = [
   { id: "photos", name: "Tira de 4 fotos", price: 49, icon: "▣" },
@@ -1161,7 +1208,7 @@ export default function Home() {
                   <button
                     type="button"
                     tabIndex={isCopy ? -1 : undefined}
-                    onClick={() => openBuilder(packages[2]!, theme.name)}
+                    onClick={() => openBuilder(OCCASION_PACKAGE, theme.name)}
                     className="flex w-full items-center justify-between border border-t-0 border-edge/10 bg-surface px-5 py-4 text-left text-heading transition duration-500 group-hover:bg-[var(--occasion-accent)] group-hover:text-white"
                   >
                     <span className="text-xs font-bold uppercase tracking-[0.13em]">
